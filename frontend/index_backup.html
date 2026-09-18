@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreightWise AI</title>
+</head>
+
+<body>
+
+    <h1>FreightWise AI</h1>
+    <p>Intelligent Freight Forecasting & Decision Support</p>
+
+    <hr>
+
+    <h2>Cargo Information</h2>
+<label>Cargo Type:</label>
+<select id="cargoType">
+    <option value="Coal">Coal</option>
+    <option value="Iron Ore">Iron Ore</option>
+    <option value="Grain">Grain</option>
+</select>
+<br><br>
+
+<label>Origin Port:</label>
+<select id="originPort">
+    <option value="Newcastle">Newcastle</option>
+    <option value="RichardsBay">RichardsBay</option>
+    <option value="Indonesia">Indonesia</option>
+</select>
+<br><br>
+
+<label>Destination Port:</label>
+<select id="destinationPort">
+    <option value="Chennai">Chennai</option>
+    <option value="Mundra">Mundra</option>
+</select>
+<br><br>
+
+<label>Current Coal Price (USD/MT):</label>
+<input type="number" id="coalPrice" placeholder="Enter coal price">
+<br><br>
+    <label>Cargo Quantity (MT):</label>
+    <input type="number" id="cargoQuantity" placeholder="Enter cargo quantity">
+
+    <button onclick="getDecision()">Analyze</button>
+
+    <h2>Decision Result</h2>
+
+    <pre id="result">Enter cargo quantity and click Analyze.</pre>
+
+    <script>
+        async function getDecision() {
+
+            const cargoQuantity =
+                document.getElementById("cargoQuantity").value;
+
+            if (!cargoQuantity) {
+                alert("Please enter cargo quantity.");
+                return;
+            }
+
+            const response = await fetch(
+                `http://127.0.0.1:8000/decision?cargo_quantity=${cargoQuantity}`
+            );
+
+            const data = await response.json();
+
+            document.getElementById("result").textContent =
+                JSON.stringify(data, null, 2);
+        }
+    </script>
+
+</body>
+</html>

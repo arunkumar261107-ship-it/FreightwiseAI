@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FreightWise AI - Complete Decision Report</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#06101c;
+    color:#ffffff;
+    min-height:100vh;
+}
+
+nav{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 50px;
+    background:#081522;
+    border-bottom:1px solid #1b344b;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#35d0ff;
+}
+
+.nav-right{
+    color:#8ea6ba;
+    font-size:14px;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:40px auto 70px;
+}
+
+.header{
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#8fa5b8;
+}
+
+.report-header{
+    background:linear-gradient(135deg,#102b42,#091a2a);
+    border:1px solid #28506c;
+    border-radius:22px;
+    padding:35px;
+    margin-bottom:25px;
+}
+
+.report-header h2{
+    color:#35d0ff;
+    margin-bottom:10px;
+}
+
+.report-header p{
+    color:#9eb2c2;
+}
+
+.decision-card{
+    background:linear-gradient(135deg,#102b42,#091a2a);
+    border:1px solid #28506c;
+    border-radius:22px;
+    padding:40px;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.decision-label{
+    color:#8fa9bd;
+    font-size:13px;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+#decision{
+    font-size:42px;
+    font-weight:bold;
+}
+
+.confidence{
+    margin-top:18px;
+    color:#a5bacb;
+}
+
+.confidence strong{
+    color:#ffffff;
+    font-size:20px;
+}
+
+.why-card{
+    background:#0b1b2b;
+    border:1px solid #203b53;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:30px;
+}
+
+.why-card h2{
+    font-size:21px;
+    margin-bottom:18px;
+}
+
+.reason{
+    padding:13px 15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    background:#10263a;
+    color:#c5d4df;
+    border-left:3px solid #35d0ff;
+}
+
+.section{
+    margin-top:32px;
+}
+
+.section h2{
+    margin-bottom:16px;
+    font-size:22px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    background:#0b1b2b;
+    border:1px solid #1e374e;
+    border-radius:16px;
+    padding:22px;
+}
+
+.card h3{
+    color:#8099ad;
+    font-size:12px;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+
+.value{
+    font-size:23px;
+    font-weight:bold;
+    word-break:break-word;
+}
+
+.sub{
+    color:#8197a9;
+    font-size:13px;
+    margin-top:7px;
+}
+
+.status-good{
+    color:#52e08b;
+}
+
+.status-medium{
+    color:#ffd166;
+}
+
+.status-high{
+    color:#ff6b6b;
+}
+
+.risk-box{
+    background:#0b1b2b;
+    border:1px solid #1e374e;
+    border-radius:16px;
+    padding:25px;
+    margin-top:18px;
+}
+
+.risk-bar{
+    height:12px;
+    background:#172b3d;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.risk-fill{
+    height:100%;
+    background:#35d0ff;
+    border-radius:20px;
+}
+
+.button-area{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:35px;
+}
+
+.button{
+    display:inline-block;
+    padding:13px 23px;
+    border:1px solid #31516d;
+    border-radius:10px;
+    color:white;
+    text-decoration:none;
+    background:#0b1b2b;
+    cursor:pointer;
+}
+
+.button:hover{
+    background:#12304a;
+}
+
+.primary{
+    border-color:#35d0ff;
+    background:#102b42;
+}
+
+.primary:hover{
+    background:#153d59;
+}
+
+.error{
+    text-align:center;
+    padding:50px;
+    color:#ff7777;
+}
+
+@media print{
+
+    body{
+        background:white;
+        color:black;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .container{
+        width:100%;
+        margin:0;
+    }
+
+    .card,
+    .why-card,
+    .decision-card,
+    .report-header,
+    .risk-box{
+        background:white;
+        color:black;
+        border:1px solid #cccccc;
+        box-shadow:none;
+    }
+
+    .card h3,
+    .sub,
+    .header p,
+    .report-header p{
+        color:#555555;
+    }
+
+    .button-area{
+        display:none;
+    }
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    nav{
+        padding:0 20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:30px;
+    }
+
+    #decision{
+        font-size:30px;
+    }
+
+    .button-area{
+        flex-direction:column;
+    }
+
+    .button{
+        text-align:center;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+        FreightWise <span>AI</span>
+    </div>
+
+    <div class="nav-right">
+        Complete Decision Report
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>
+            Complete AI Shipment Decision Report
+        </h1>
+
+        <p>
+            Freight, trade, route, vessel, weather, risk and profit intelligence
+        </p>
+
+    </div>
+
+
+    <div id="content">
+
+        <div class="error">
+            Loading shipment report...
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   GET STORED DATA
+===================================================== */
+
+const storedResult =
+    sessionStorage.getItem("freightwiseResult");
+
+const storedInput =
+    sessionStorage.getItem("freightwiseInput");
+
+
+/* =====================================================
+   FORMAT FUNCTIONS
+===================================================== */
+
+function formatINR(value){
+
+    const number = Number(value);
+
+    if(!Number.isFinite(number)){
+        return "₹0.00";
+    }
+
+    if(number < 0){
+
+        return "-₹" +
+            Math.abs(number).toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits:2,
+                    maximumFractionDigits:2
+                }
+            );
+    }
+
+    return "₹" +
+        number.toLocaleString(
+            "en-IN",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+}
+
+
+function formatINRShort(value){
+
+    const number = Number(value);
+
+    if(!Number.isFinite(number)){
+        return "₹0";
+    }
+
+    if(number < 0){
+
+        return "-₹" +
+            Math.abs(number).toLocaleString(
+                "en-IN",
+                {
+                    maximumFractionDigits:2
+                }
+            );
+    }
+
+    return "₹" +
+        number.toLocaleString(
+            "en-IN",
+            {
+                maximumFractionDigits:2
+            }
+        );
+}
+
+
+function formatNumber(value){
+
+    const number = Number(value);
+
+    if(!Number.isFinite(number)){
+        return "0";
+    }
+
+    return number.toLocaleString("en-IN",{
+        maximumFractionDigits:2
+    });
+}
+
+
+/* =====================================================
+   CHECK DATA
+===================================================== */
+
+if(!storedResult){
+
+    document.getElementById("content").innerHTML = `
+
+        <div class="error">
+
+            <h2>
+                Shipment data not found
+            </h2>
+
+            <br>
+
+            <p>
+                Please complete a shipment analysis first.
+            </p>
+
+            <br><br>
+
+            <a
+                class="button primary"
+                href="index.html"
+            >
+                ← New Shipment Analysis
+            </a>
+
+        </div>
+
+    `;
+
+}
+else{
+
+
+    /* =================================================
+       PARSE RESULT
+    ================================================= */
+
+    const result =
+        JSON.parse(storedResult);
+
+
+    const input =
+        storedInput
+            ? JSON.parse(storedInput)
+            : {};
+
+
+    /* =================================================
+       IMPORTANT BACKEND OBJECTS
+    ================================================= */
+
+    const route =
+        result.best_route || {};
+
+
+    const vessel =
+        result.selected_vessel || {};
+
+
+    /* =================================================
+       INPUT FALLBACKS
+    ================================================= */
+
+    const cargoType =
+        result.cargo_type ||
+        input.cargoType ||
+        "-";
+
+
+    const origin =
+        result.origin_port ||
+        input.origin ||
+        "-";
+
+
+    const destination =
+        result.destination_port ||
+        input.destination ||
+        "-";
+
+
+    const quantity =
+        result.cargo_quantity_mt ||
+        input.cargoQuantity ||
+        0;
+
+
+    const purchasePrice =
+        result.coal_price ||
+        input.purchasePrice ||
+        0;
+
+
+    const sellingPrice =
+        result.selling_price ||
+        input.sellingPrice ||
+        0;
+
+
+    /* =================================================
+       WEATHER CLASS
+    ================================================= */
+
+    let weatherClass = "status-medium";
+
+    if(result.weather_risk === "Low"){
+
+        weatherClass = "status-good";
+
+    }
+    else if(result.weather_risk === "High"){
+
+        weatherClass = "status-high";
+
+    }
+
+
+    /* =================================================
+       OVERALL RISK
+    ================================================= */
+
+    let overallRiskClass =
+        "status-medium";
+
+    if(result.overall_risk === "Low"){
+
+        overallRiskClass =
+            "status-good";
+
+    }
+    else if(result.overall_risk === "High"){
+
+        overallRiskClass =
+            "status-high";
+
+    }
+
+
+    /* =================================================
+       DECISION COLOR
+    ================================================= */
+
+    let decisionColor =
+        "status-medium";
+
+
+    if(
+        result.decision === "BUY & SHIP NOW"
+        ||
+        result.decision === "BOOK"
+    ){
+
+        decisionColor =
+            "status-good";
+
+    }
+    else if(
+        result.decision === "AVOID"
+    ){
+
+        decisionColor =
+            "status-high";
+
+    }
+
+
+    /* =================================================
+       DECISION REASONS
+    ================================================= */
+
+    let reasonsHTML = "";
+
+
+    if(
+        Array.isArray(result.decision_reasons)
+        &&
+        result.decision_reasons.length > 0
+    ){
+
+        result.decision_reasons.forEach(
+            function(reason){
+
+                reasonsHTML += `
+
+                    <div class="reason">
+                        ✓ ${reason}
+                    </div>
+
+                `;
+
+            }
+        );
+
+    }
+    else{
+
+        reasonsHTML = `
+
+            <div class="reason">
+                ✓ Decision analysis completed.
+            </div>
+
+        `;
+
+    }
+
+
+    /* =================================================
+       RISK BAR
+    ================================================= */
+
+    let riskWidth =
+        Number(result.risk_points || 0);
+
+    /*
+       Maximum theoretical risk points
+       = weather + wind + wave + rain + port
+       = 10
+    */
+
+    riskWidth =
+        (riskWidth / 10) * 100;
+
+
+    if(riskWidth > 100){
+
+        riskWidth = 100;
+
+    }
+
+    if(riskWidth < 0){
+
+        riskWidth = 0;
+
+    }
+
+
+    /* =================================================
+       FORECAST PROFIT PER MT
+    ================================================= */
+
+    const forecastProfitPerMT =
+        quantity > 0
+            ? Number(result.forecast_profit || 0) / Number(quantity)
+            : 0;
+
+
+    /* =================================================
+       REPORT HTML
+    ================================================= */
+
+    document.getElementById("content").innerHTML = `
+
+
+        <!-- =========================================
+             REPORT HEADER
+        ========================================== -->
+
+        <div class="report-header">
+
+            <h2>
+                FreightWise AI
+            </h2>
+
+            <p>
+                AI-powered cargo transportation and trading
+                decision support report
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             AI DECISION
+        ========================================== -->
+
+        <div class="decision-card">
+
+            <div class="decision-label">
+                AI SHIPMENT DECISION
+            </div>
+
+            <div
+                id="decision"
+                class="${decisionColor}"
+            >
+
+                ${result.decision || "ANALYSIS COMPLETE"}
+
+            </div>
+
+            <div class="confidence">
+
+                AI Confidence:
+
+                <strong>
+                    ${result.confidence || 0}%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             WHY DECISION
+        ========================================== -->
+
+        <div class="why-card">
+
+            <h2>
+                💡 Why This Decision?
+            </h2>
+
+            ${reasonsHTML}
+
+        </div>
+
+
+        <!-- =========================================
+             CARGO & TRADE
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                📦 Cargo & Trade Intelligence
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Cargo Type
+                    </h3>
+
+                    <div class="value">
+                        ${cargoType}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Cargo Quantity
+                    </h3>
+
+                    <div class="value">
+                        ${formatNumber(quantity)} MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Origin
+                    </h3>
+
+                    <div class="value">
+                        ${origin}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Destination
+                    </h3>
+
+                    <div class="value">
+                        ${destination}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Purchase Price
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(purchasePrice)}
+                    </div>
+
+                    <div class="sub">
+                        Per MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Selling Price
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(sellingPrice)}
+                    </div>
+
+                    <div class="sub">
+                        Per MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Cargo Value
+                    </h3>
+
+                    <div class="value">
+                        ${formatINR(result.cargo_value)}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Purchase Cost
+                    </h3>
+
+                    <div class="value">
+                        ${formatINR(result.purchase_cost)}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             ROUTE
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                🗺️ Route Intelligence
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Recommended Route
+                    </h3>
+
+                    <div class="value">
+                        ${route.route || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Origin
+                    </h3>
+
+                    <div class="value">
+                        ${origin}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Destination
+                    </h3>
+
+                    <div class="value">
+                        ${destination}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Route Score
+                    </h3>
+
+                    <div class="value">
+                        ${route.route_score ?? 0}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Distance
+                    </h3>
+
+                    <div class="value">
+                        ${formatNumber(route.distance_nm)} NM
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Voyage Duration
+                    </h3>
+
+                    <div class="value">
+                        ${route.avg_voyage_days ?? 0} Days
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Port Status
+                    </h3>
+
+                    <div class="value">
+                        ${route.port_status || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Route Suitability
+                    </h3>
+
+                    <div class="value">
+                        ${route.route_suitability || "-"}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             FREIGHT
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                📈 Freight Market Intelligence
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Current Freight Rate
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(
+                            result.current_freight_rate
+                        )}
+                    </div>
+
+                    <div class="sub">
+                        Per MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Predicted Freight Rate
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(
+                            result.predicted_freight_rate
+                        )}
+                    </div>
+
+                    <div class="sub">
+                        ML prediction
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Rate Difference
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(
+                            result.rate_difference
+                        )}
+                    </div>
+
+                    <div class="sub">
+                        Predicted − Current
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Market Trend
+                    </h3>
+
+                    <div class="value">
+                        ${result.market_trend || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Current Freight Cost
+                    </h3>
+
+                    <div class="value">
+                        ${formatINR(
+                            result.current_freight_cost
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Forecast Freight Cost
+                    </h3>
+
+                    <div class="value">
+                        ${formatINR(
+                            result.forecast_freight_cost
+                        )}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             WEATHER
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                🌦️ Weather & Shipment Risk
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Weather Risk
+                    </h3>
+
+                    <div class="value ${weatherClass}">
+                        ${result.weather_risk || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Temperature
+                    </h3>
+
+                    <div class="value">
+                        ${result.temperature_c ?? 0} °C
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Wind Speed
+                    </h3>
+
+                    <div class="value">
+                        ${result.wind_speed_knots ?? 0} knots
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Wave Height
+                    </h3>
+
+                    <div class="value">
+                        ${result.wave_height_m ?? 0} m
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Rainfall
+                    </h3>
+
+                    <div class="value">
+                        ${result.rainfall_mm ?? 0} mm
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Overall Shipment Risk
+                    </h3>
+
+                    <div class="value ${overallRiskClass}">
+                        ${result.overall_risk || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Risk Points
+                    </h3>
+
+                    <div class="value">
+                        ${result.risk_points ?? 0}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="risk-box">
+
+                <h3>
+                    Shipment Risk Level
+                </h3>
+
+                <div class="risk-bar">
+
+                    <div
+                        class="risk-fill"
+                        style="width:${riskWidth}%"
+                    ></div>
+
+                </div>
+
+                <div class="sub">
+                    Risk points:
+                    ${result.risk_points ?? 0}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             VESSEL
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                🚢 Vessel Intelligence
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Selected Vessel
+                    </h3>
+
+                    <div class="value">
+                        ${vessel.vessel_name || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Vessel Type
+                    </h3>
+
+                    <div class="value">
+                        ${vessel.vessel_type || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Vessel Capacity
+                    </h3>
+
+                    <div class="value">
+                        ${formatNumber(
+                            vessel.capacity_mt
+                        )} MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Vessel Status
+                    </h3>
+
+                    <div class="value status-good">
+                        ${vessel.status || "Available"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Vessels Required
+                    </h3>
+
+                    <div class="value">
+                        ${result.vessels_required ?? 0}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Total Vessel Capacity
+                    </h3>
+
+                    <div class="value">
+                        ${formatNumber(
+                            result.total_vessel_capacity
+                        )} MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Capacity Utilization
+                    </h3>
+
+                    <div class="value">
+                        ${result.capacity_utilization ?? 0}%
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             PROFIT
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                💰 Profit Intelligence
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Revenue
+                    </h3>
+
+                    <div class="value">
+                        ${formatINR(result.revenue)}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Current Profit
+                    </h3>
+
+                    <div class="value ${
+                        Number(result.current_profit) >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${formatINR(
+                            result.current_profit
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Forecast Profit
+                    </h3>
+
+                    <div class="value ${
+                        Number(result.forecast_profit) >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${formatINR(
+                            result.forecast_profit
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Profit / MT
+                    </h3>
+
+                    <div class="value ${
+                        Number(result.profit_per_mt) >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${formatINRShort(
+                            result.profit_per_mt
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Current Profit Margin
+                    </h3>
+
+                    <div class="value ${
+                        Number(result.current_profit_margin) >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${result.current_profit_margin ?? 0}%
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Forecast Profit Margin
+                    </h3>
+
+                    <div class="value ${
+                        Number(result.forecast_profit_margin) >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${result.forecast_profit_margin ?? 0}%
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Break-even Selling Price
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(
+                            result.break_even_selling_price
+                        )}
+                    </div>
+
+                    <div class="sub">
+                        Per MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Maximum Acceptable Freight
+                    </h3>
+
+                    <div class="value">
+                        ${formatINRShort(
+                            result.max_acceptable_freight_rate
+                        )}
+                    </div>
+
+                    <div class="sub">
+                        Per MT
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Forecast Profit / MT
+                    </h3>
+
+                    <div class="value ${
+                        forecastProfitPerMT >= 0
+                        ? "status-good"
+                        : "status-high"
+                    }">
+
+                        ${formatINRShort(
+                            forecastProfitPerMT
+                        )}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             FINAL RISK
+        ========================================== -->
+
+        <div class="section">
+
+            <h2>
+                🛡️ Final Risk Analysis
+            </h2>
+
+            <div class="grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Weather Risk
+                    </h3>
+
+                    <div class="value ${weatherClass}">
+                        ${result.weather_risk || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Overall Shipment Risk
+                    </h3>
+
+                    <div class="value ${overallRiskClass}">
+                        ${result.overall_risk || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Port Status
+                    </h3>
+
+                    <div class="value">
+                        ${route.port_status || "-"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Vessel Availability
+                    </h3>
+
+                    <div class="value status-good">
+                        ${vessel.status || "Available"}
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        AI Confidence
+                    </h3>
+
+                    <div class="value">
+                        ${result.confidence ?? 0}%
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Decision Score
+                    </h3>
+
+                    <div class="value">
+                        ${result.decision_score ?? 0}/100
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Final Decision
+                    </h3>
+
+                    <div class="value ${decisionColor}">
+                        ${result.decision || "-"}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             BUTTONS
+        ========================================== -->
+
+        <div class="button-area">
+
+
+            <button
+                class="button primary"
+                onclick="window.print()"
+            >
+                🖨️ Print / Save Report
+            </button>
+
+
+            <a
+                class="button"
+                href="result.html"
+            >
+                ← Back to Result
+            </a>
+
+
+            <a
+                class="button"
+                href="forecast.html"
+            >
+                📈 Freight Forecast
+            </a>
+
+
+            <a
+                class="button"
+                href="booking.html"
+            >
+                🚢 Book Shipment
+            </a>
+
+
+            <a
+                class="button"
+                href="booking-history.html"
+            >
+                📋 Booking History
+            </a>
+
+
+            <a
+                class="button"
+                href="index.html"
+            >
+                🏠 New Shipment
+            </a>
+
+
+        </div>
+
+
+    `;
+
+}
+
+</script>
+
+</body>
+
+</html>

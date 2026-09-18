@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreightWise AI - Booking</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #061018;
+            color: white;
+        }
+
+        nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: #08151f;
+            border-bottom: 1px solid #203642;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #39d5ff;
+        }
+
+        .back {
+            color: #9db5c0;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 45px auto;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #8fa7b3;
+            margin-bottom: 35px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: #0c1c27;
+            border: 1px solid #24404d;
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .card h2 {
+            margin-bottom: 22px;
+            color: #ffffff;
+        }
+
+        .booking-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .type {
+            padding: 15px;
+            border: 1px solid #31505d;
+            border-radius: 10px;
+            background: #091721;
+            color: #b7cbd4;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .type.active {
+            background: #123b4d;
+            border-color: #39d5ff;
+            color: white;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            color: #a8bdc7;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #31505d;
+            background: #08151f;
+            color: white;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #39d5ff;
+        }
+
+        .summary p {
+            margin: 17px 0;
+            color: #9fb5c0;
+        }
+
+        .summary strong {
+            color: white;
+        }
+
+        .confirm {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 9px;
+            background: #39d5ff;
+            color: #031018;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .success {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #35d99a;
+            border-radius: 10px;
+            background: #0b2a24;
+        }
+
+        .success h3 {
+            color: #54e8ae;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        FreightWise <span>AI</span>
+    </div>
+
+    <a href="result.html" class="back">
+        ← Back to Analysis
+    </a>
+</nav>
+
+<div class="container">
+
+    <h1>Shipment Booking</h1>
+
+    <p class="subtitle">
+        Book your cargo shipment based on FreightWise AI analysis.
+    </p>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <h2>Booking Details</h2>
+
+            <div class="booking-types">
+
+                <button
+                    class="type active"
+                    id="immediate"
+                    onclick="selectType('Immediate')">
+                    🚢 Immediate Booking
+                </button>
+
+                <button
+                    class="type"
+                    id="prebook"
+                    onclick="selectType('Pre-Booking')">
+                    📅 Pre-Booking
+                </button>
+
+            </div>
+
+            <label>Shipment Date</label>
+            <input type="date" id="date">
+
+            <label>Shipment Time</label>
+            <input type="text" id="time" placeholder="e.g. 10:30 AM">
+
+            <label>Contact Name</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name">
+
+            <label>Contact Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email">
+
+            <button class="confirm" onclick="confirmBooking()">
+                CONFIRM BOOKING →
+            </button>
+
+            <div class="success" id="success">
+
+                <h3>✓ Booking Confirmed</h3>
+
+                <p id="successText"></p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Shipment Summary</h2>
+
+            <div class="summary">
+
+                <p>
+                    Cargo Type:
+                    <strong id="cargoType">-</strong>
+                </p>
+
+                <p>
+                    Cargo Quantity:
+                    <strong id="quantity">-</strong> MT
+                </p>
+
+                <p>
+                    Origin:
+                    <strong id="origin">-</strong>
+                </p>
+
+                <p>
+                    Destination:
+                    <strong id="destination">-</strong>
+                </p>
+
+                <p>
+                    Route:
+                    <strong id="route">-</strong>
+                </p>
+
+                <p>
+                    Vessel:
+                    <strong id="vessel">-</strong>
+                </p>
+
+                <p>
+                    AI Decision:
+                    <strong id="decision">-</strong>
+                </p>
+
+                <p>
+                    AI Confidence:
+                    <strong id="confidence">-</strong>%
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let bookingType = "Immediate";
+
+
+function selectType(type) {
+
+    bookingType = type;
+
+    document
+        .getElementById("immediate")
+        .classList.remove("active");
+
+    document
+        .getElementById("prebook")
+        .classList.remove("active");
+
+    if (type === "Immediate") {
+
+        document
+            .getElementById("immediate")
+            .classList.add("active");
+
+    } else {
+
+        document
+            .getElementById("prebook")
+            .classList.add("active");
+
+    }
+}
+
+
+function loadResult() {
+
+    const saved =
+        sessionStorage.getItem("freightwiseResult");
+
+    if (!saved) {
+        return;
+    }
+
+    const result = JSON.parse(saved);
+
+    document.getElementById("cargoType").textContent =
+        result.cargo_type || "-";
+
+    document.getElementById("quantity").textContent =
+        result.cargo_quantity_mt || "-";
+
+    document.getElementById("origin").textContent =
+        result.origin || "-";
+
+    document.getElementById("destination").textContent =
+        result.destination || "-";
+
+    document.getElementById("route").textContent =
+        result.best_route || "-";
+
+    document.getElementById("vessel").textContent =
+        result.recommended_vessel || "-";
+
+    document.getElementById("decision").textContent =
+        result.decision || "-";
+
+    document.getElementById("confidence").textContent =
+        result.confidence_score || "-";
+}
+
+
+function confirmBooking() {
+
+    const date =
+        document.getElementById("date").value;
+
+    const time =
+        document.getElementById("time").value;
+
+    const name =
+        document.getElementById("name").value;
+
+    const email =
+        document.getElementById("email").value;
+
+
+    if (!date || !time || !name || !email) {
+
+        alert("Please fill all booking details.");
+
+        return;
+    }
+
+
+    const bookingId =
+        "FW-" +
+        Date.now().toString().slice(-8);
+
+
+    const booking = {
+
+        bookingId: bookingId,
+
+        bookingType: bookingType,
+
+        shipmentDate: date,
+
+        shipmentTime: time,
+
+        contactName: name,
+
+        contactEmail: email,
+
+        cargoType:
+            document.getElementById("cargoType").textContent,
+
+        cargoQuantity:
+            document.getElementById("quantity").textContent,
+
+        origin:
+            document.getElementById("origin").textContent,
+
+        destination:
+            document.getElementById("destination").textContent,
+
+        route:
+            document.getElementById("route").textContent,
+
+        vessel:
+            document.getElementById("vessel").textContent,
+
+        decision:
+            document.getElementById("decision").textContent,
+
+        confidence:
+            document.getElementById("confidence").textContent,
+
+        createdAt:
+            new Date().toLocaleString()
+    };
+
+
+    localStorage.setItem(
+        "freightwiseBooking",
+        JSON.stringify(booking)
+    );
+
+
+    document.getElementById("success").style.display =
+        "block";
+
+
+    document.getElementById("successText").textContent =
+        "Booking ID " +
+        bookingId +
+        " created successfully for " +
+        bookingType +
+        " shipment on " +
+        date +
+        " at " +
+        time +
+        ".";
+}
+
+
+loadResult();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+route,origin,destination,distance_nm,avg_voyage_days,base_freight_rate,port_status
+Newcastle-Chennai,Newcastle,Chennai,5000,15,18.50,Operational
+RichardsBay-Chennai,RichardsBay,Chennai,6200,18,21.00,Operational
+Indonesia-Chennai,Indonesia,Chennai,2500,8,12.50,Operational
+Australia-Mundra,Newcastle,Mundra,5200,16,19.20,Operational
+Indonesia-Mundra,Indonesia,Mundra,2700,9,13.20,Operational
+RichardsBay-Mundra,RichardsBay,Mundra,6100,18,20.50,Operational

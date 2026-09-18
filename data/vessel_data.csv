@@ -1,0 +1,7 @@
+vessel_name,vessel_type,capacity_mt,speed_knots,status,fuel_efficiency,port_compatibility
+Ocean Star,Capesize,180000,14,Available,High,Yes
+Sea Queen,Panamax,75000,13,Available,Medium,Yes
+Pacific Trader,Panamax,82000,12,Available,Medium,Yes
+Global Carrier,Capesize,175000,14,Unavailable,High,Yes
+Indian Voyager,Supramax,60000,12,Available,Medium,Yes
+Eastern Pearl,Handysize,40000,11,Available,Low,Yes

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FreightWise AI - Booking History</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #061018;
+            color: white;
+        }
+
+        nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: #08151f;
+            border-bottom: 1px solid #203642;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #39d5ff;
+        }
+
+        .back {
+            color: #9db5c0;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #8fa7b3;
+            margin-bottom: 35px;
+        }
+
+        .booking-card {
+            background: #0c1c27;
+            border: 1px solid #24404d;
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .booking-id {
+            color: #39d5ff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .status {
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #103b30;
+            color: #54e8ae;
+            font-size: 13px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .item {
+            padding: 15px;
+            background: #091721;
+            border-radius: 10px;
+            border: 1px solid #1c3541;
+        }
+
+        .label {
+            color: #8199a5;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            color: white;
+            font-size: 15px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            background: #0c1c27;
+            border: 1px solid #24404d;
+            border-radius: 16px;
+            display: none;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #8fa7b3;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .new-booking {
+            background: #39d5ff;
+            color: #031018;
+        }
+
+        .clear {
+            background: #182832;
+            color: #d1e1e7;
+            border: 1px solid #31505d;
+        }
+
+        @media (max-width: 750px) {
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        FreightWise <span>AI</span>
+    </div>
+
+    <a href="booking.html" class="back">
+        ← Back to Booking
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>Booking History</h1>
+
+    <p class="subtitle">
+        View your confirmed FreightWise AI shipment booking.
+    </p>
+
+
+    <div class="booking-card" id="bookingCard">
+
+        <div class="top">
+
+            <div>
+                <div class="label">
+                    BOOKING ID
+                </div>
+
+                <div class="booking-id" id="bookingId">
+                    -
+                </div>
+            </div>
+
+            <div class="status">
+                CONFIRMED
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="item">
+                <div class="label">Booking Type</div>
+                <div class="value" id="bookingType">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Shipment Date</div>
+                <div class="value" id="shipmentDate">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Shipment Time</div>
+                <div class="value" id="shipmentTime">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Cargo Type</div>
+                <div class="value" id="cargoType">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Cargo Quantity</div>
+                <div class="value" id="cargoQuantity">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Origin</div>
+                <div class="value" id="origin">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Destination</div>
+                <div class="value" id="destination">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Route</div>
+                <div class="value" id="route">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Recommended Vessel</div>
+                <div class="value" id="vessel">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">AI Decision</div>
+                <div class="value" id="decision">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">AI Confidence</div>
+                <div class="value" id="confidence">-</div>
+            </div>
+
+            <div class="item">
+                <div class="label">Created At</div>
+                <div class="value" id="createdAt">-</div>
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button
+                class="new-booking"
+                onclick="window.location.href='booking.html'">
+                + New Booking
+            </button>
+
+            <button
+                class="clear"
+                onclick="clearBooking()">
+                Clear History
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="empty" id="empty">
+
+        <h2>No Booking Found</h2>
+
+        <p>
+            You haven't created a shipment booking yet.
+        </p>
+
+        <br>
+
+        <button
+            class="new-booking"
+            onclick="window.location.href='booking.html'">
+            Create Booking
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function loadBooking() {
+
+    const saved =
+        localStorage.getItem("freightwiseBooking");
+
+    if (!saved) {
+
+        document.getElementById("bookingCard").style.display =
+            "none";
+
+        document.getElementById("empty").style.display =
+            "block";
+
+        return;
+    }
+
+
+    const booking = JSON.parse(saved);
+
+
+    document.getElementById("bookingId").textContent =
+        booking.bookingId || "-";
+
+    document.getElementById("bookingType").textContent =
+        booking.bookingType || "-";
+
+    document.getElementById("shipmentDate").textContent =
+        booking.shipmentDate || "-";
+
+    document.getElementById("shipmentTime").textContent =
+        booking.shipmentTime || "-";
+
+    document.getElementById("cargoType").textContent =
+        booking.cargoType || "-";
+
+    document.getElementById("cargoQuantity").textContent =
+        booking.cargoQuantity
+        ? booking.cargoQuantity + " MT"
+        : "-";
+
+    document.getElementById("origin").textContent =
+        booking.origin || "-";
+
+    document.getElementById("destination").textContent =
+        booking.destination || "-";
+
+    document.getElementById("route").textContent =
+        booking.route || "-";
+
+    document.getElementById("vessel").textContent =
+        booking.vessel || "-";
+
+    document.getElementById("decision").textContent =
+        booking.decision || "-";
+
+    document.getElementById("confidence").textContent =
+        booking.confidence
+        ? booking.confidence + "%"
+        : "-";
+
+    document.getElementById("createdAt").textContent =
+        booking.createdAt || "-";
+}
+
+
+function clearBooking() {
+
+    localStorage.removeItem("freightwiseBooking");
+
+    loadBooking();
+
+}
+
+
+loadBooking();
+
+</script>
+
+</body>
+</html>

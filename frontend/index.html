@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FreightWise AI — Intelligent Freight Decision System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, #14213d 0%, transparent 35%),
+                radial-gradient(circle at top right, #102a43 0%, transparent 35%),
+                #07111f;
+            color: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        header {
+            padding: 28px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #4ade80;
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: rgba(74,222,128,0.1);
+            color: #4ade80;
+            font-size: 13px;
+            border: 1px solid rgba(74,222,128,0.25);
+        }
+
+        .hero {
+            padding: 45px 0 30px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #4ade80;
+        }
+
+        .hero p {
+            color: #aab6c5;
+            max-width: 780px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            margin: 35px 0 18px;
+        }
+
+        .section-title h2 {
+            font-size: 23px;
+            margin-bottom: 6px;
+        }
+
+        .section-title p {
+            color: #8997a8;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(14, 28, 46, 0.9);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+        }
+
+        .card h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #8f9eaf;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .metric {
+            font-size: 27px;
+            font-weight: 800;
+            margin: 12px 0 5px;
+        }
+
+        .sub {
+            color: #8290a0;
+            font-size: 12px;
+        }
+
+        .route-box {
+            margin-top: 14px;
+            padding: 13px;
+            background: rgba(255,255,255,0.035);
+            border-radius: 10px;
+        }
+
+        .route-box div {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 7px 0;
+            font-size: 13px;
+        }
+
+        .route-box span:first-child {
+            color: #8c99a8;
+        }
+
+        .route-box span:last-child {
+            font-weight: 600;
+        }
+
+        .form-card {
+            background: rgba(14, 28, 46, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 28px;
+            margin-top: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            color: #b8c3d0;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 9px;
+            border: 1px solid #26384d;
+            background: #091625;
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4ade80;
+        }
+
+        .analyze-area {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .analyze-btn {
+            border: none;
+            border-radius: 11px;
+            padding: 15px 35px;
+            background: #4ade80;
+            color: #06130c;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(74,222,128,0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: #4ade80;
+            font-size: 14px;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .decision-card {
+            margin-top: 20px;
+            border: 1px solid rgba(74,222,128,0.25);
+            background: rgba(20,50,37,0.45);
+        }
+
+        .decision {
+            font-size: 30px;
+            font-weight: 900;
+            margin-top: 10px;
+        }
+
+        .reasons {
+            margin-top: 15px;
+            padding-left: 18px;
+            color: #a9b6c5;
+            line-height: 1.8;
+            font-size: 13px;
+        }
+
+        .progress {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .progress-item {
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.035);
+            text-align: center;
+            color: #7f8d9d;
+            font-size: 12px;
+        }
+
+        .progress-item.active {
+            color: #4ade80;
+            border: 1px solid rgba(74,222,128,0.2);
+        }
+
+        footer {
+            margin-top: 55px;
+            padding: 25px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            color: #687789;
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .grid,
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid,
+            .form-grid,
+            .progress {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container header-content">
+        <div class="logo">
+            FreightWise <span>AI</span>
+        </div>
+
+        <div class="status">
+            ● AI Decision System
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>
+            Intelligent Freight<br>
+            <span>Decision Support System</span>
+        </h1>
+
+        <p>
+            Analyze cargo, freight rates, vessels, routes, weather,
+            shipment risk and profitability to generate an intelligent
+            shipping decision.
+        </p>
+    </section>
+
+
+    <!-- PROCESS -->
+    <div class="progress">
+        <div class="progress-item active">01 · Cargo</div>
+        <div class="progress-item active">02 · Vessel</div>
+        <div class="progress-item active">03 · Route</div>
+        <div class="progress-item active">04 · AI Decision</div>
+    </div>
+
+
+    <!-- FIRST PAGE INTELLIGENCE -->
+    <div class="section-title">
+        <h2>Freight Intelligence Dashboard</h2>
+        <p>
+            Core intelligence modules available before running the final analysis.
+        </p>
+    </div>
+
+
+    <section class="grid">
+
+        <!-- VESSEL -->
+        <div class="card">
+            <div class="icon">🚢</div>
+            <h3>Vessel Intelligence</h3>
+            <p>
+                Select available vessels based on cargo capacity,
+                vessel type and shipment requirements.
+            </p>
+
+            <div class="metric" id="vesselName">
+                Ready
+            </div>
+
+            <div class="sub" id="vesselStatus">
+                Waiting for analysis
+            </div>
+
+            <div class="route-box">
+                <div>
+                    <span>Vessel Type</span>
+                    <span id="vesselType">—</span>
+                </div>
+
+                <div>
+                    <span>Capacity</span>
+                    <span id="vesselCapacity">—</span>
+                </div>
+
+                <div>
+                    <span>Vessels Required</span>
+                    <span id="vesselsRequired">—</span>
+                </div>
+
+                <div>
+                    <span>Utilization</span>
+                    <span id="capacityUtilization">—</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ROUTE -->
+        <div class="card">
+            <div class="icon">🗺️</div>
+            <h3>Route Intelligence</h3>
+            <p>
+                Analyze route distance, voyage duration,
+                weather and port suitability.
+            </p>
+
+            <div class="metric" id="routeName">
+                Ready
+            </div>
+
+            <div class="sub" id="routeSuitability">
+                Waiting for analysis
+            </div>
+
+            <div class="route-box">
+                <div>
+                    <span>Distance</span>
+                    <span id="routeDistance">—</span>
+                </div>
+
+                <div>
+                    <span>Voyage Days</span>
+                    <span id="voyageDays">—</span>
+                </div>
+
+                <div>
+                    <span>Route Score</span>
+                    <span id="routeScore">—</span>
+                </div>
+
+                <div>
+                    <span>Port Status</span>
+                    <span id="portStatus">—</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FREIGHT -->
+        <div class="card">
+            <div class="icon">📈</div>
+            <h3>Freight Intelligence</h3>
+            <p>
+                Compare current and predicted freight rates
+                using the ML forecasting engine.
+            </p>
+
+            <div class="metric" id="currentFreight">
+                ₹—
+            </div>
+
+            <div class="sub">
+                Current Freight Rate
+            </div>
+
+            <div class="route-box">
+                <div>
+                    <span>Predicted Rate</span>
+                    <span id="predictedFreight">₹—</span>
+                </div>
+
+                <div>
+                    <span>Difference</span>
+                    <span id="rateDifference">—</span>
+                </div>
+
+                <div>
+                    <span>Market Trend</span>
+                    <span id="marketTrend">—</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- WEATHER -->
+        <div class="card">
+            <div class="icon">🌦️</div>
+            <h3>Weather Risk</h3>
+            <p>
+                Weather conditions are considered to estimate
+                shipment and route risk.
+            </p>
+
+            <div class="metric" id="weatherRisk">
+                —
+            </div>
+
+            <div class="sub">
+                Overall Weather Risk
+            </div>
+
+            <div class="route-box">
+                <div>
+                    <span>Temperature</span>
+                    <span id="temperature">—</span>
+                </div>
+
+                <div>
+                    <span>Wind</span>
+                    <span id="windSpeed">—</span>
+                </div>
+
+                <div>
+                    <span>Wave</span>
+                    <span id="waveHeight">—</span>
+                </div>
+
+                <div>
+                    <span>Rainfall</span>
+                    <span id="rainfall">—</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- PROFIT -->
+        <div class="card">
+            <div class="icon">💰</div>
+            <h3>Profit Intelligence</h3>
+            <p>
+                Estimate shipment revenue, freight cost,
+                profit and profit margin.
+            </p>
+
+            <div class="metric" id="currentProfit">
+                ₹—
+            </div>
+
+            <div class="sub">
+                Estimated Current Profit
+            </div>
+
+            <div class="route-box">
+                <div>
+                    <span>Forecast Profit</span>
+                    <span id="forecastProfit">₹—</span>
+                </div>
+
+                <div>
+                    <span>Profit / MT</span>
+                    <span id="profitPerMt">₹—</span>
+                </div>
+
+                <div>
+                    <span>Current Margin</span>
+                    <span id="currentMargin">—</span>
+                </div>
+
+                <div>
+                    <span>Break-even Price</span>
+                    <span id="breakEven">₹—</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- AI DECISION -->
+        <div class="card decision-card">
+            <div class="icon">🤖</div>
+            <h3>AI Shipment Decision</h3>
+            <p>
+                Final recommendation generated using freight,
+                vessel, route, weather and profit intelligence.
+            </p>
+
+            <div class="decision" id="decision">
+                WAITING
+            </div>
+
+            <div class="sub" id="confidence">
+                Confidence: —
+            </div>
+
+            <ul class="reasons" id="decisionReasons">
+                <li>Enter shipment details and run analysis.</li>
+            </ul>
+        </div>
+
+    </section>
+
+
+    <!-- INPUT -->
+    <div class="section-title">
+        <h2>Cargo & Trade Analysis</h2>
+        <p>
+            Enter your shipment details to activate the complete AI analysis.
+        </p>
+    </div>
+
+
+    <section class="form-card">
+
+        <div class="form-grid">
+
+            <div class="field">
+                <label for="cargoType">
+                    Cargo Type
+                </label>
+
+                <select id="cargoType">
+                    <option value="Coal">Coal</option>
+                    <option value="Iron Ore">Iron Ore</option>
+                    <option value="Grain">Grain</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Soybean">Soybean</option>
+                </select>
+            </div>
+
+
+            <div class="field">
+                <label for="cargoQuantity">
+                    Cargo Quantity (MT)
+                </label>
+
+                <input
+                    id="cargoQuantity"
+                    type="number"
+                    placeholder="Example: 150000"
+                    min="1"
+                >
+            </div>
+
+
+            <div class="field">
+                <label for="coalPrice">
+                    Purchase Price / MT
+                </label>
+
+                <input
+                    id="coalPrice"
+                    type="number"
+                    placeholder="Example: 106"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
+
+
+            <div class="field">
+                <label for="sellingPrice">
+                    Expected Selling Price / MT
+                </label>
+
+                <input
+                    id="sellingPrice"
+                    type="number"
+                    placeholder="Example: 120"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
+
+
+            <div class="field">
+                <label for="originPort">
+                    Origin Port
+                </label>
+
+                <select id="originPort">
+
+                    <option value="Indonesia">
+                        Indonesia
+                    </option>
+
+                    <option value="Newcastle">
+                        Newcastle
+                    </option>
+
+                    <option value="RichardsBay">
+                        RichardsBay
+                    </option>
+
+                </select>
+            </div>
+
+
+            <div class="field">
+                <label for="destinationPort">
+                    Destination Port
+                </label>
+
+                <select id="destinationPort">
+
+                    <option value="Chennai">
+                        Chennai
+                    </option>
+
+                    <option value="Mundra">
+                        Mundra
+                    </option>
+
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="analyze-area">
+
+            <button
+                class="analyze-btn"
+                onclick="analyzeShipment()"
+            >
+                🚀 Analyze Shipment
+            </button>
+
+        </div>
+
+        <div
+            class="loading"
+            id="loading"
+        >
+            ⏳ FreightWise AI is analyzing cargo, vessel,
+            route, freight, weather and profit...
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    FreightWise AI · Intelligent Freight Forecasting & Decision Support System
+</footer>
+
+
+<script>
+
+const BACKEND_URL =
+    "http://127.0.0.1:8000";
+
+
+function money(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        isNaN(value)
+    ) {
+        return "₹—";
+    }
+
+    return "₹" + Number(value).toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+}
+
+
+function number(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        isNaN(value)
+    ) {
+        return "—";
+    }
+
+    return Number(value).toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+}
+
+
+function percentage(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        isNaN(value)
+    ) {
+        return "—";
+    }
+
+    return Number(value).toFixed(2) + "%";
+}
+
+
+function safeText(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        value === ""
+    ) {
+        return "—";
+    }
+
+    return value;
+}
+
+
+function updateDashboard(data) {
+
+    console.log(
+        "FreightWise AI result:",
+        data
+    );
+
+
+    /* =========================
+       VESSEL INTELLIGENCE
+       ========================= */
+
+    const vessel =
+        data.selected_vessel || {};
+
+    document.getElementById(
+        "vesselName"
+    ).textContent =
+        safeText(
+            vessel.vessel_name
+        );
+
+    document.getElementById(
+        "vesselStatus"
+    ).textContent =
+        safeText(
+            vessel.status
+        );
+
+    document.getElementById(
+        "vesselType"
+    ).textContent =
+        safeText(
+            vessel.vessel_type
+        );
+
+    document.getElementById(
+        "vesselCapacity"
+    ).textContent =
+        number(
+            vessel.capacity_mt
+        ) + " MT";
+
+    document.getElementById(
+        "vesselsRequired"
+    ).textContent =
+        safeText(
+            data.vessels_required
+        );
+
+    document.getElementById(
+        "capacityUtilization"
+    ).textContent =
+        percentage(
+            data.capacity_utilization
+        );
+
+
+    /* =========================
+       ROUTE INTELLIGENCE
+       ========================= */
+
+    const route =
+        data.best_route || {};
+
+    document.getElementById(
+        "routeName"
+    ).textContent =
+        safeText(
+            route.route
+        );
+
+    document.getElementById(
+        "routeSuitability"
+    ).textContent =
+        safeText(
+            route.route_suitability
+        );
+
+    document.getElementById(
+        "routeDistance"
+    ).textContent =
+        number(
+            route.distance_nm
+        ) + " NM";
+
+    document.getElementById(
+        "voyageDays"
+    ).textContent =
+        number(
+            route.avg_voyage_days
+        ) + " days";
+
+    document.getElementById(
+        "routeScore"
+    ).textContent =
+        number(
+            route.route_score
+        );
+
+    document.getElementById(
+        "portStatus"
+    ).textContent =
+        safeText(
+            route.port_status
+        );
+
+
+    /* =========================
+       FREIGHT INTELLIGENCE
+       ========================= */
+
+    document.getElementById(
+        "currentFreight"
+    ).textContent =
+        money(
+            data.current_freight_rate
+        );
+
+    document.getElementById(
+        "predictedFreight"
+    ).textContent =
+        money(
+            data.predicted_freight_rate
+        );
+
+    document.getElementById(
+        "rateDifference"
+    ).textContent =
+        number(
+            data.rate_difference
+        );
+
+    document.getElementById(
+        "marketTrend"
+    ).textContent =
+        safeText(
+            data.market_trend
+        );
+
+
+    /* =========================
+       WEATHER
+       ========================= */
+
+    document.getElementById(
+        "weatherRisk"
+    ).textContent =
+        safeText(
+            data.weather_risk
+        );
+
+    document.getElementById(
+        "temperature"
+    ).textContent =
+        number(
+            data.temperature_c
+        ) + " °C";
+
+    document.getElementById(
+        "windSpeed"
+    ).textContent =
+        number(
+            data.wind_speed_knots
+        ) + " knots";
+
+    document.getElementById(
+        "waveHeight"
+    ).textContent =
+        number(
+            data.wave_height_m
+        ) + " m";
+
+    document.getElementById(
+        "rainfall"
+    ).textContent =
+        number(
+            data.rainfall_mm
+        ) + " mm";
+
+
+    /* =========================
+       PROFIT
+       ========================= */
+
+    document.getElementById(
+        "currentProfit"
+    ).textContent =
+        money(
+            data.current_profit
+        );
+
+    document.getElementById(
+        "forecastProfit"
+    ).textContent =
+        money(
+            data.forecast_profit
+        );
+
+    document.getElementById(
+        "profitPerMt"
+    ).textContent =
+        money(
+            data.profit_per_mt
+        );
+
+    document.getElementById(
+        "currentMargin"
+    ).textContent =
+        percentage(
+            data.current_profit_margin
+        );
+
+    document.getElementById(
+        "breakEven"
+    ).textContent =
+        money(
+            data.break_even_selling_price
+        );
+
+
+    /* =========================
+       AI DECISION
+       ========================= */
+
+    document.getElementById(
+        "decision"
+    ).textContent =
+        safeText(
+            data.decision
+        );
+
+    document.getElementById(
+        "confidence"
+    ).textContent =
+        "Confidence: " +
+        safeText(
+            data.confidence
+        );
+
+
+    const reasons =
+        document.getElementById(
+            "decisionReasons"
+        );
+
+    reasons.innerHTML = "";
+
+
+    if (
+        Array.isArray(
+            data.decision_reasons
+        )
+        &&
+        data.decision_reasons.length > 0
+    ) {
+
+        data.decision_reasons.forEach(
+            reason => {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+                li.textContent =
+                    reason;
+
+                reasons.appendChild(
+                    li
+                );
+            }
+        );
+
+    } else {
+
+        const li =
+            document.createElement(
+                "li"
+            );
+
+        li.textContent =
+            "AI analysis completed.";
+
+        reasons.appendChild(
+            li
+        );
+    }
+}
+
+
+async function analyzeShipment() {
+
+    const cargoType =
+        document.getElementById(
+            "cargoType"
+        ).value;
+
+    const cargoQuantity =
+        document.getElementById(
+            "cargoQuantity"
+        ).value;
+
+    const coalPrice =
+        document.getElementById(
+            "coalPrice"
+        ).value;
+
+    const sellingPrice =
+        document.getElementById(
+            "sellingPrice"
+        ).value;
+
+    const originPort =
+        document.getElementById(
+            "originPort"
+        ).value;
+
+    const destinationPort =
+        document.getElementById(
+            "destinationPort"
+        ).value;
+
+
+    if (
+        !cargoQuantity ||
+        !coalPrice ||
+        !sellingPrice
+    ) {
+
+        alert(
+            "Please enter Cargo Quantity, Purchase Price and Selling Price."
+        );
+
+        return;
+    }
+
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+    loading.style.display =
+        "block";
+
+
+    const params =
+        new URLSearchParams({
+
+            cargo_quantity:
+                cargoQuantity,
+
+            cargo_type:
+                cargoType,
+
+            origin_port:
+                originPort,
+
+            destination_port:
+                destinationPort,
+
+            coal_price:
+                coalPrice,
+
+            selling_price:
+                sellingPrice,
+
+            forecast_days:
+                "7"
+
+        });
+
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL +
+                "/decision?" +
+                params.toString()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Backend returned " +
+                response.status
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "API response:",
+            data
+        );
+
+
+        if (data.error) {
+
+            alert(
+                data.error
+            );
+
+            return;
+        }
+
+
+        /*
+        SAVE RESULT
+        */
+
+        sessionStorage.setItem(
+            "freightwiseResult",
+            JSON.stringify(data)
+        );
+
+
+        sessionStorage.setItem(
+            "freightwiseInput",
+            JSON.stringify({
+
+                cargo_type:
+                    cargoType,
+
+                cargo_quantity:
+                    Number(
+                        cargoQuantity
+                    ),
+
+                coal_price:
+                    Number(
+                        coalPrice
+                    ),
+
+                selling_price:
+                    Number(
+                        sellingPrice
+                    ),
+
+                origin_port:
+                    originPort,
+
+                destination_port:
+                    destinationPort,
+
+                forecast_days:
+                    7
+
+            })
+        );
+
+
+        /*
+        UPDATE FIRST PAGE
+        */
+
+        updateDashboard(
+            data
+        );
+
+
+        /*
+        KEEP USER ON FIRST PAGE
+        */
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        alert(
+            "Backend connection failed.\n\n" +
+            "Make sure FastAPI is running:\n" +
+            "uvicorn backend.main:app --reload"
+        );
+
+    } finally {
+
+        loading.style.display =
+            "none";
+    }
+}
+
+
+/*
+AUTO LOAD PREVIOUS RESULT
+IF AVAILABLE
+*/
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const saved =
+            sessionStorage.getItem(
+                "freightwiseResult"
+            );
+
+        if (!saved) {
+            return;
+        }
+
+        try {
+
+            const data =
+                JSON.parse(
+                    saved
+                );
+
+            updateDashboard(
+                data
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Saved result error:",
+                error
+            );
+        }
+    }
+);
+
+</script>
+
+</body>
+</html>

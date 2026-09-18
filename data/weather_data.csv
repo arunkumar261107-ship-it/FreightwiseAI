@@ -1,0 +1,16 @@
+date,route,temperature_c,wind_speed_knots,wave_height_m,rainfall_mm,weather_risk
+2026-09-01,Newcastle-Chennai,24,18,2.1,5,Low
+2026-09-02,Newcastle-Chennai,25,20,2.4,8,Low
+2026-09-03,Newcastle-Chennai,23,28,3.2,12,Medium
+2026-09-04,Newcastle-Chennai,22,35,4.8,18,High
+2026-09-05,Newcastle-Chennai,24,22,2.5,7,Low
+2026-09-01,RichardsBay-Chennai,21,30,3.8,15,Medium
+2026-09-02,RichardsBay-Chennai,20,38,5.1,25,High
+2026-09-03,RichardsBay-Chennai,22,34,4.5,20,High
+2026-09-04,RichardsBay-Chennai,23,25,3.0,10,Medium
+2026-09-05,RichardsBay-Chennai,24,19,2.2,6,Low
+2026-09-01,Indonesia-Chennai,29,20,2.5,10,Low
+2026-09-02,Indonesia-Chennai,30,25,3.1,14,Medium
+2026-09-03,Indonesia-Chennai,29,32,4.0,22,High
+2026-09-04,Indonesia-Chennai,28,24,2.8,9,Medium
+2026-09-05,Indonesia-Chennai,30,18,2.0,5,Low
