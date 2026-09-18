@@ -61,7 +61,7 @@
             }
 
             const response = await fetch(
-                `http://127.0.0.1:8000/decision?cargo_quantity=${cargoQuantity}`
+                `https://freightwiseai.onrender.com/decision?cargo_quantity=${cargoQuantity}`
             );
 
             const data = await response.json();
