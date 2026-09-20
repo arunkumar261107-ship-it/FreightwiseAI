@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>FreightWise AI - Freight Forecast</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,319 +20,292 @@
 
         body {
             background: #07111f;
-            color: #ffffff;
+            color: white;
             min-height: 100vh;
         }
 
         .container {
             width: 92%;
-            max-width: 1250px;
+            max-width: 1400px;
             margin: auto;
-            padding: 30px 0 50px;
+            padding: 30px 0 60px;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
             gap: 20px;
-        }
-
-        .title h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .title p {
-            color: #9caec4;
-            font-size: 15px;
-        }
-
-        .back-btn {
-            padding: 12px 20px;
-            border: 1px solid #2d4059;
-            border-radius: 10px;
-            background: #101e31;
-            color: white;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .back-btn:hover {
-            background: #182a43;
-        }
-
-        .status {
-            padding: 14px 18px;
-            border-radius: 10px;
-            background: #0c1b2e;
-            border: 1px solid #1d334d;
+            flex-wrap: wrap;
             margin-bottom: 25px;
-            color: #a9bdd4;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-top: 7px;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            cursor: pointer;
+            color: white;
+            background: #2563eb;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .error {
+            background: #3f1111;
+            border: 1px solid #7f1d1d;
+            color: #fecaca;
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background: #0d2d22;
+            border: 1px solid #166534;
+            color: #bbf7d0;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
+            gap: 15px;
             margin-bottom: 25px;
         }
 
         .card {
-            background: #0d1a2b;
-            border: 1px solid #1c334c;
-            border-radius: 14px;
-            padding: 22px;
+            background: #0d1b2a;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 20px;
         }
 
-        .card h3 {
-            color: #8ea5be;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .value {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .small {
-            color: #91a5bb;
+        .label {
+            color: #94a3b8;
             font-size: 13px;
-            margin-top: 8px;
-        }
-
-        .section {
-            background: #0d1a2b;
-            border: 1px solid #1c334c;
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .section h2 {
-            font-size: 21px;
-            margin-bottom: 20px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .info-box {
-            background: #091525;
-            border: 1px solid #1a3048;
-            border-radius: 10px;
-            padding: 17px;
-        }
-
-        .info-label {
-            color: #8198b0;
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
-
-        .info-value {
-            font-size: 17px;
-            font-weight: bold;
-        }
-
-        .decision {
-            border: 1px solid #35506c;
-            background: #101f32;
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .decision-title {
-            color: #8da5bd;
-            font-size: 14px;
             margin-bottom: 10px;
         }
 
-        .decision-value {
-            font-size: 32px;
+        .value {
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 8px;
+            color: #f8fafc;
         }
 
-        .confidence {
-            color: #9eb2c8;
+        .section {
+            margin-top: 25px;
         }
 
-        .reasons {
-            margin-top: 18px;
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .reason {
-            padding: 10px 0;
-            border-bottom: 1px solid #1b3046;
-            color: #b9c8d8;
-        }
-
-        .chart-container {
-            width: 100%;
-            overflow-x: auto;
+        .panel {
+            background: #0d1b2a;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
         canvas {
-            width: 100% !important;
-            max-height: 420px;
-            background: #091525;
+            width: 100%;
+            height: 360px;
+            background: #091625;
             border-radius: 12px;
-            padding: 10px;
         }
 
-        .forecast-table-wrapper {
+        .table-wrapper {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 850px;
+            min-width: 900px;
         }
 
         th,
         td {
-            padding: 13px 12px;
-            border-bottom: 1px solid #1b3046;
+            padding: 13px;
+            border-bottom: 1px solid #1e293b;
             text-align: left;
         }
 
         th {
-            color: #91a8c0;
-            font-size: 13px;
+            color: #38bdf8;
+            background: #0a1727;
         }
 
         td {
-            color: #d5dfeb;
-            font-size: 14px;
+            color: #cbd5e1;
         }
 
-        .buttons {
+        .green {
+            color: #22c55e;
+        }
+
+        .red {
+            color: #ef4444;
+        }
+
+        .orange {
+            color: #f97316;
+        }
+
+        .actions {
             display: flex;
-            flex-wrap: wrap;
             gap: 12px;
-            margin-top: 25px;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
 
-        button {
-            border: none;
-            border-radius: 9px;
-            padding: 12px 18px;
-            color: white;
-            background: #18304c;
-            cursor: pointer;
-            font-size: 14px;
+        .secondary {
+            background: #334155;
         }
 
-        button:hover {
-            background: #244564;
-        }
-
-        .primary {
-            background: #245a78;
-        }
-
-        .primary:hover {
-            background: #2e7195;
-        }
-
-        .error {
-            text-align: center;
-            padding: 50px;
-            color: #ff9b9b;
+        .secondary:hover {
+            background: #475569;
         }
 
         @media (max-width: 1000px) {
+
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .info-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 650px) {
-            .container {
-                width: 94%;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
 
             .grid {
                 grid-template-columns: 1fr;
             }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .title h1 {
+            .title {
                 font-size: 25px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
+
+    <!-- HEADER -->
+
     <div class="header">
 
-        <div class="title">
-            <h1>📈 Freight Forecast Intelligence</h1>
-            <p>FreightWise AI — 7-Day Machine Learning Forecast</p>
+        <div>
+
+            <div class="title">
+                📈 Freight Forecast Intelligence
+            </div>
+
+            <div class="subtitle">
+                FreightWise AI - 7-Day Machine Learning Forecast
+            </div>
+
         </div>
 
-        <a href="result.html" class="back-btn">
+        <button onclick="goBack()">
             ← Back to Result
-        </a>
+        </button>
 
     </div>
 
 
-    <div id="status" class="status">
-        Loading forecast...
-    </div>
+    <!-- STATUS -->
+
+    <div id="statusBox"></div>
 
 
-    <!-- TOP CARDS -->
+    <!-- SUMMARY -->
 
     <div class="grid">
 
         <div class="card">
-            <h3>Current Freight Rate</h3>
-            <div class="value" id="currentRate">--</div>
-            <div class="small">Current market rate</div>
+
+            <div class="label">
+                Current Freight Rate
+            </div>
+
+            <div
+                class="value"
+                id="currentFreight">
+                -
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>Predicted Freight Rate</h3>
-            <div class="value" id="predictedRate">--</div>
-            <div class="small">ML forecast</div>
-        </div>
 
         <div class="card">
-            <h3>Rate Difference</h3>
-            <div class="value" id="rateDifference">--</div>
-            <div class="small">Expected change</div>
+
+            <div class="label">
+                Predicted Freight Rate
+            </div>
+
+            <div
+                class="value"
+                id="predictedFreight">
+                -
+            </div>
+
         </div>
 
+
         <div class="card">
-            <h3>Market Trend</h3>
-            <div class="value" id="marketTrend">--</div>
-            <div class="small">Forecast direction</div>
+
+            <div class="label">
+                Rate Difference
+            </div>
+
+            <div
+                class="value"
+                id="rateDifference">
+                -
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="label">
+                Market Trend
+            </div>
+
+            <div
+                class="value"
+                id="marketTrend">
+                -
+            </div>
+
         </div>
 
     </div>
@@ -336,112 +313,290 @@
 
     <!-- AI DECISION -->
 
-    <div class="decision">
+    <div class="panel">
 
-        <div class="decision-title">
-            AI SHIPMENT DECISION
+        <div class="section-title">
+            AI Shipment Decision
         </div>
 
-        <div class="decision-value" id="decision">
-            --
-        </div>
+        <div class="grid">
 
-        <div class="confidence">
-            Confidence: <span id="confidence">--</span>
-        </div>
+            <div class="card">
 
-        <div class="reasons" id="reasons">
+                <div class="label">
+                    Decision
+                </div>
+
+                <div
+                    class="value"
+                    id="decision">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="label">
+                    Confidence
+                </div>
+
+                <div
+                    class="value"
+                    id="confidence">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="label">
+                    Route
+                </div>
+
+                <div
+                    class="value"
+                    id="route">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="label">
+                    Weather Risk
+                </div>
+
+                <div
+                    class="value"
+                    id="weatherRisk">
+                    -
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
 
-    <!-- 7 DAY GRAPH -->
+    <!-- GRAPH -->
 
     <div class="section">
 
-        <h2>📊 7-Day ML Freight Forecast</h2>
+        <div class="section-title">
+            📊 7-Day ML Freight Forecast
+        </div>
 
-        <div class="chart-container">
+        <div class="panel">
 
-            <canvas id="forecastChart"></canvas>
+            <canvas id="forecastCanvas"></canvas>
 
         </div>
 
     </div>
 
 
-    <!-- FORECAST TABLE -->
+    <!-- TABLE -->
 
     <div class="section">
 
-        <h2>📅 7-Day Forecast Details</h2>
+        <div class="section-title">
+            7-Day Forecast Details
+        </div>
 
-        <div class="forecast-table-wrapper">
+        <div class="panel">
 
-            <table>
+            <div class="table-wrapper">
 
-                <thead>
+                <table>
+
+                    <thead>
 
                     <tr>
-                        <th>Day</th>
-                        <th>Date</th>
-                        <th>Current Rate</th>
-                        <th>Predicted Rate</th>
-                        <th>Difference</th>
-                        <th>Trend</th>
-                        <th>Weather Risk</th>
+
+                        <th>
+                            Day
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Current Rate
+                        </th>
+
+                        <th>
+                            Predicted Rate
+                        </th>
+
+                        <th>
+                            Difference
+                        </th>
+
+                        <th>
+                            Trend
+                        </th>
+
+                        <th>
+                            Weather
+                        </th>
+
+                        <th>
+                            Demand
+                        </th>
+
                     </tr>
 
-                </thead>
+                    </thead>
 
-                <tbody id="forecastTable">
 
-                </tbody>
+                    <tbody id="forecastTable">
 
-            </table>
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- ROUTE -->
+    <!-- EXTRA INTELLIGENCE -->
 
     <div class="section">
 
-        <h2>🗺️ Route Intelligence</h2>
+        <div class="section-title">
+            Shipment Intelligence
+        </div>
 
-        <div class="info-grid">
+        <div class="grid">
 
-            <div class="info-box">
-                <div class="info-label">Best Route</div>
-                <div class="info-value" id="bestRoute">--</div>
+            <div class="card">
+
+                <div class="label">
+                    Temperature
+                </div>
+
+                <div
+                    class="value"
+                    id="temperature">
+                    -
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <div class="info-label">Distance</div>
-                <div class="info-value" id="distance">--</div>
+
+            <div class="card">
+
+                <div class="label">
+                    Wind Speed
+                </div>
+
+                <div
+                    class="value"
+                    id="windSpeed">
+                    -
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <div class="info-label">Voyage Days</div>
-                <div class="info-value" id="voyageDays">--</div>
+
+            <div class="card">
+
+                <div class="label">
+                    Wave Height
+                </div>
+
+                <div
+                    class="value"
+                    id="waveHeight">
+                    -
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <div class="info-label">Route Score</div>
-                <div class="info-value" id="routeScore">--</div>
+
+            <div class="card">
+
+                <div class="label">
+                    Rainfall
+                </div>
+
+                <div
+                    class="value"
+                    id="rainfall">
+                    -
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <div class="info-label">Port Status</div>
-                <div class="info-value" id="portStatus">--</div>
+
+            <div class="card">
+
+                <div class="label">
+                    Vessel
+                </div>
+
+                <div
+                    class="value"
+                    id="vessel">
+                    -
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <div class="info-label">Route Suitability</div>
-                <div class="info-value" id="routeSuitability">--</div>
+
+            <div class="card">
+
+                <div class="label">
+                    Vessel Capacity
+                </div>
+
+                <div
+                    class="value"
+                    id="vesselCapacity">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="label">
+                    Current Profit
+                </div>
+
+                <div
+                    class="value"
+                    id="currentProfit">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="label">
+                    Forecast Profit
+                </div>
+
+                <div
+                    class="value"
+                    id="forecastProfit">
+                    -
+                </div>
+
             </div>
 
         </div>
@@ -449,1152 +604,1009 @@
     </div>
 
 
-    <!-- WEATHER -->
+    <!-- ACTIONS -->
 
-    <div class="section">
+    <div class="actions">
 
-        <h2>🌦️ Weather & Shipment Risk</h2>
+        <button onclick="goBack()">
+            ← Back to Result
+        </button>
 
-        <div class="info-grid">
+        <button onclick="goReport()">
+            Complete Report
+        </button>
 
-            <div class="info-box">
-                <div class="info-label">Weather Risk</div>
-                <div class="info-value" id="weatherRisk">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Temperature</div>
-                <div class="info-value" id="temperature">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Wind Speed</div>
-                <div class="info-value" id="windSpeed">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Wave Height</div>
-                <div class="info-value" id="waveHeight">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Rainfall</div>
-                <div class="info-value" id="rainfall">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Overall Shipment Risk</div>
-                <div class="info-value" id="overallRisk">--</div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- VESSEL -->
-
-    <div class="section">
-
-        <h2>🚢 Vessel Intelligence</h2>
-
-        <div class="info-grid">
-
-            <div class="info-box">
-                <div class="info-label">Selected Vessel</div>
-                <div class="info-value" id="vessel">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Vessel Type</div>
-                <div class="info-value" id="vesselType">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Vessel Capacity</div>
-                <div class="info-value" id="vesselCapacity">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Vessels Required</div>
-                <div class="info-value" id="vesselsRequired">--</div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- PROFIT -->
-
-    <div class="section">
-
-        <h2>💰 Profit Intelligence</h2>
-
-        <div class="info-grid">
-
-            <div class="info-box">
-                <div class="info-label">Cargo Value</div>
-                <div class="info-value" id="cargoValue">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Purchase Cost</div>
-                <div class="info-value" id="purchaseCost">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Current Profit</div>
-                <div class="info-value" id="currentProfit">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Forecast Profit</div>
-                <div class="info-value" id="forecastProfit">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Profit / MT</div>
-                <div class="info-value" id="profitPerMT">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Break-Even Selling Price</div>
-                <div class="info-value" id="breakEven">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Maximum Acceptable Freight</div>
-                <div class="info-value" id="maxFreight">--</div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-label">Profit Margin</div>
-                <div class="info-value" id="profitMargin">--</div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- BUTTONS -->
-
-    <div class="buttons">
-
-        <button
-            class="primary"
-            onclick="window.location.href='report.html'">
-            📄 Complete Report
+        <button onclick="goBooking()">
+            Book Shipment
         </button>
 
         <button
-            onclick="window.location.href='booking.html'">
-            🚢 Book Shipment
-        </button>
-
-        <button
-            onclick="window.location.href='booking-history.html'">
-            📋 Booking History
-        </button>
-
-        <button
+            class="secondary"
             onclick="window.print()">
-            🖨️ Print Forecast
-        </button>
-
-        <button
-            onclick="window.location.href='index.html'">
-            ← New Analysis
+            Print Forecast
         </button>
 
     </div>
+
 
 </div>
 
 
 <script>
 
-    const API_BASE = "https://freightwiseai.onrender.com";
+
+/* =========================
+   FORMAT FUNCTIONS
+========================= */
 
 
-    // -----------------------------
-    // SESSION DATA
-    // -----------------------------
+function safe(value) {
 
-    const inputData =
-        JSON.parse(
-            sessionStorage.getItem("freightwiseInput")
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+        return "-";
+    }
+
+    return value;
+
+}
+
+
+function numberFormat(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        isNaN(Number(value))
+    ) {
+        return "-";
+    }
+
+    return Number(value).toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 2
+        }
+    );
+
+}
+
+
+function money(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        isNaN(Number(value))
+    ) {
+        return "-";
+    }
+
+    return "Rs. " +
+        Number(value).toLocaleString(
+            "en-IN",
+            {
+                maximumFractionDigits: 2
+            }
         );
 
+}
 
-    if (!inputData) {
 
-        document.body.innerHTML = `
-            <div class="error">
-                <h2>Shipment data not found</h2>
-                <p>Please return to the main page and run a new analysis.</p>
-                <br>
-                <button onclick="window.location.href='index.html'">
-                    Go to Analysis
-                </button>
-            </div>
-        `;
+function setText(id, value) {
 
-        throw new Error("No shipment input found");
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.textContent =
+            value;
 
     }
 
-
-    // -----------------------------
-    // FORMAT FUNCTIONS
-    // -----------------------------
-
-    function formatINR(value) {
-
-        if (
-            value === null ||
-            value === undefined ||
-            value === "" ||
-            isNaN(value)
-        ) {
-            return "--";
-        }
-
-        return "₹" + Number(value).toLocaleString("en-IN", {
-            maximumFractionDigits: 2
-        });
-
-    }
+}
 
 
-    function formatNumber(value) {
-
-        if (
-            value === null ||
-            value === undefined ||
-            value === "" ||
-            isNaN(value)
-        ) {
-            return "--";
-        }
-
-        return Number(value).toLocaleString("en-IN", {
-            maximumFractionDigits: 2
-        });
-
-    }
+/* =========================
+   SHOW STATUS
+========================= */
 
 
-    function formatDate(value) {
+function showStatus(message) {
 
-        if (!value) {
-            return "--";
-        }
+    const box =
+        document.getElementById(
+            "statusBox"
+        );
 
-        const date = new Date(value);
+    box.innerHTML =
+        '<div class="success">' +
+        message +
+        '</div>';
 
-        if (isNaN(date)) {
-            return value;
-        }
-
-        return date.toLocaleDateString("en-IN", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        });
-
-    }
+}
 
 
-    // -----------------------------
-    // LOAD FORECAST
-    // -----------------------------
-
-    async function loadForecast() {
-
-        const status =
-            document.getElementById("status");
-
-        try {
-
-            status.textContent =
-                "Connecting to FreightWise AI ML forecast engine...";
+/* =========================
+   LOAD SAVED RESULT
+========================= */
 
 
-            const params =
-                new URLSearchParams({
+function loadForecast() {
 
-                    cargo_quantity:
-                        inputData.cargoQuantity,
+    try {
 
-                    cargo_type:
-                        inputData.cargoType,
-
-                    origin_port:
-                        inputData.origin,
-
-                    destination_port:
-                        inputData.destination,
-
-                    coal_price:
-                        inputData.purchasePrice,
-
-                    selling_price:
-                        inputData.sellingPrice || 0
-
-                });
-
-
-            const response =
-                await fetch(
-                    `${API_BASE}/decision?${params.toString()}`
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Backend returned HTTP " +
-                    response.status
-                );
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            if (data.error) {
-
-                throw new Error(data.error);
-
-            }
-
-
-            displayData(data);
-
-
-            status.textContent =
-                "✅ ML forecast loaded successfully.";
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-            status.textContent =
-                "❌ Forecast loading failed: " +
-                error.message;
-
-        }
-
-    }
-
-
-    // -----------------------------
-    // DISPLAY DATA
-    // -----------------------------
-
-    function displayData(data) {
-
-        // Top cards
-
-        document.getElementById("currentRate").textContent =
-            formatINR(
-                data.current_freight_rate
+        const saved =
+            sessionStorage.getItem(
+                "freightwiseResult"
             );
 
 
-        document.getElementById("predictedRate").textContent =
-            formatINR(
-                data.predicted_freight_rate
-            );
+        if (!saved) {
 
-
-        document.getElementById("rateDifference").textContent =
-            formatINR(
-                data.rate_difference
-            );
-
-
-        document.getElementById("marketTrend").textContent =
-            data.market_trend || "--";
-
-
-        // Decision
-
-        document.getElementById("decision").textContent =
-            data.decision || "--";
-
-
-        document.getElementById("confidence").textContent =
-            data.confidence !== undefined
-                ? data.confidence + "%"
-                : "--";
-
-
-        // Reasons
-
-        const reasons =
-            document.getElementById("reasons");
-
-        reasons.innerHTML = "";
-
-
-        if (
-            Array.isArray(data.decision_reasons)
-        ) {
-
-            data.decision_reasons
-                .forEach(reason => {
-
-                    const div =
-                        document.createElement("div");
-
-                    div.className = "reason";
-
-                    div.textContent =
-                        "• " + reason;
-
-                    reasons.appendChild(div);
-
-                });
-
-        }
-
-
-        // Route
-
-        const route =
-            data.best_route || {};
-
-
-        document.getElementById("bestRoute").textContent =
-            route.route || data.route || "--";
-
-
-        document.getElementById("distance").textContent =
-            route.distance_nm !== undefined
-                ? formatNumber(route.distance_nm) + " nm"
-                : "--";
-
-
-        document.getElementById("voyageDays").textContent =
-            route.avg_voyage_days !== undefined
-                ? route.avg_voyage_days + " days"
-                : "--";
-
-
-        document.getElementById("routeScore").textContent =
-            route.route_score !== undefined
-                ? route.route_score
-                : "--";
-
-
-        document.getElementById("portStatus").textContent =
-            route.port_status || "--";
-
-
-        document.getElementById("routeSuitability").textContent =
-            route.route_suitability || "--";
-
-
-        // Weather
-
-        document.getElementById("weatherRisk").textContent =
-            data.weather_risk || "--";
-
-
-        document.getElementById("temperature").textContent =
-            data.temperature_c !== undefined
-                ? data.temperature_c + " °C"
-                : "--";
-
-
-        document.getElementById("windSpeed").textContent =
-            data.wind_speed_knots !== undefined
-                ? data.wind_speed_knots + " knots"
-                : "--";
-
-
-        document.getElementById("waveHeight").textContent =
-            data.wave_height_m !== undefined
-                ? data.wave_height_m + " m"
-                : "--";
-
-
-        document.getElementById("rainfall").textContent =
-            data.rainfall_mm !== undefined
-                ? data.rainfall_mm + " mm"
-                : "--";
-
-
-        document.getElementById("overallRisk").textContent =
-            data.overall_risk || "--";
-
-
-        // Vessel
-
-        const vessel =
-            data.selected_vessel || {};
-
-
-        document.getElementById("vessel").textContent =
-            vessel.vessel_name ||
-            data.vessel_name ||
-            "--";
-
-
-        document.getElementById("vesselType").textContent =
-            vessel.vessel_type ||
-            data.vessel_type ||
-            "--";
-
-
-        document.getElementById("vesselCapacity").textContent =
-            vessel.capacity_mt !== undefined
-                ? formatNumber(vessel.capacity_mt) + " MT"
-                : "--";
-
-
-        document.getElementById("vesselsRequired").textContent =
-            data.vessels_required !== undefined
-                ? data.vessels_required
-                : "--";
-
-
-        // Profit
-
-        document.getElementById("cargoValue").textContent =
-            formatINR(data.cargo_value);
-
-
-        document.getElementById("purchaseCost").textContent =
-            formatINR(data.purchase_cost);
-
-
-        document.getElementById("currentProfit").textContent =
-            formatINR(data.current_profit);
-
-
-        document.getElementById("forecastProfit").textContent =
-            formatINR(data.forecast_profit);
-
-
-        document.getElementById("profitPerMT").textContent =
-            formatINR(data.profit_per_mt);
-
-
-        document.getElementById("breakEven").textContent =
-            formatINR(data.break_even_selling_price);
-
-
-        document.getElementById("maxFreight").textContent =
-            formatINR(data.max_acceptable_freight_rate);
-
-
-        document.getElementById("profitMargin").textContent =
-            data.current_profit_margin !== undefined
-                ? data.current_profit_margin + "%"
-                : "--";
-
-
-        // Forecast
-
-        const forecast =
-            data.forecast || [];
-
-
-        renderForecastTable(forecast);
-
-        renderForecastChart(forecast);
-
-    }
-
-
-    // -----------------------------
-    // FORECAST TABLE
-    // -----------------------------
-
-    function renderForecastTable(forecast) {
-
-        const table =
-            document.getElementById("forecastTable");
-
-        table.innerHTML = "";
-
-
-        if (!forecast.length) {
-
-            table.innerHTML = `
-                <tr>
-                    <td colspan="7">
-                        No forecast data available.
-                    </td>
-                </tr>
-            `;
-
-            return;
-
-        }
-
-
-        forecast
-            .slice(0, 7)
-            .forEach((row, index) => {
-
-                const tr =
-                    document.createElement("tr");
-
-
-                tr.innerHTML = `
-
-                    <td>
-                        Day ${row.forecast_day || index + 1}
-                    </td>
-
-                    <td>
-                        ${formatDate(row.date)}
-                    </td>
-
-                    <td>
-                        ${formatINR(
-                            row.current_freight_rate ??
-                            row.freight_rate
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatINR(
-                            row.predicted_freight_rate
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatINR(
-                            row.rate_difference
-                        )}
-                    </td>
-
-                    <td>
-                        ${row.market_trend || "--"}
-                    </td>
-
-                    <td>
-                        ${row.weather_risk || "--"}
-                    </td>
-
-                `;
-
-
-                table.appendChild(tr);
-
-            });
-
-    }
-
-
-    // -----------------------------
-    // FORECAST GRAPH
-    // -----------------------------
-
-    function renderForecastChart(forecast) {
-
-        const canvas =
             document.getElementById(
-                "forecastChart"
-            );
+                "statusBox"
+            ).innerHTML =
 
+                '<div class="error">' +
 
-        if (!forecast || !forecast.length) {
+                'No FreightWise AI analysis result found. Please run the shipment analysis first.' +
+
+                '</div>';
 
             return;
 
         }
 
 
-        const ctx =
-            canvas.getContext("2d");
+        const result =
+            JSON.parse(saved);
 
 
-        const rows =
-            forecast.slice(0, 7);
-
-
-        const labels =
-            rows.map(
-                (row, index) =>
-                    "Day " +
-                    (row.forecast_day || index + 1)
-            );
-
-
-        const currentRates =
-            rows.map(row =>
-                Number(
-                    row.current_freight_rate ??
-                    row.freight_rate ??
-                    0
-                )
-            );
-
-
-        const predictedRates =
-            rows.map(row =>
-                Number(
-                    row.predicted_freight_rate ??
-                    0
-                )
-            );
-
-
-        // High-DPI support
-
-        const ratio =
-            window.devicePixelRatio || 1;
-
-
-        const width =
-            canvas.clientWidth;
-
-
-        const height = 380;
-
-
-        canvas.width =
-            width * ratio;
-
-
-        canvas.height =
-            height * ratio;
-
-
-        ctx.scale(ratio, ratio);
-
-
-        const chartWidth =
-            width;
-
-
-        const chartHeight =
-            height;
-
-
-        // Clear
-
-        ctx.clearRect(
-            0,
-            0,
-            chartWidth,
-            chartHeight
+        console.log(
+            "Forecast Result:",
+            result
         );
 
 
-        // Background
+        renderForecast(result);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Forecast error:",
+            error
+        );
+
+
+        document.getElementById(
+            "statusBox"
+        ).innerHTML =
+
+            '<div class="error">' +
+
+            'Unable to read FreightWise AI result.' +
+
+            '</div>';
+
+    }
+
+}
+
+
+/* =========================
+   RENDER FORECAST
+========================= */
+
+
+function renderForecast(result) {
+
+
+    const route =
+        result.best_route || {};
+
+    const vessel =
+        result.selected_vessel || {};
+
+    const forecast =
+        Array.isArray(result.forecast)
+            ? result.forecast
+            : [];
+
+
+    /* =========================
+       SUMMARY
+    ========================= */
+
+
+    const currentRate =
+        result.current_freight_rate ??
+        route.current_freight_rate ??
+        (
+            forecast.length > 0
+                ? forecast[0].current_freight_rate
+                : null
+        );
+
+
+    const predictedRate =
+        result.predicted_freight_rate ??
+        route.predicted_freight_rate ??
+        (
+            forecast.length > 0
+                ? forecast[0].predicted_freight_rate
+                : null
+        );
+
+
+    const difference =
+        result.rate_difference ??
+        (
+            forecast.length > 0
+                ? forecast[0].rate_difference
+                : null
+        );
+
+
+    const trend =
+        result.market_trend ??
+        (
+            forecast.length > 0
+                ? forecast[0].market_trend
+                : null
+        );
+
+
+    setText(
+        "currentFreight",
+        money(currentRate)
+    );
+
+
+    setText(
+        "predictedFreight",
+        money(predictedRate)
+    );
+
+
+    setText(
+        "rateDifference",
+        money(difference)
+    );
+
+
+    setText(
+        "marketTrend",
+        safe(trend)
+    );
+
+
+    /* =========================
+       AI DECISION
+    ========================= */
+
+
+    setText(
+        "decision",
+        safe(result.decision)
+    );
+
+
+    setText(
+        "confidence",
+        safe(result.confidence)
+    );
+
+
+    setText(
+        "route",
+        safe(route.route)
+    );
+
+
+    setText(
+        "weatherRisk",
+        safe(result.weather_risk)
+    );
+
+
+    /* =========================
+       WEATHER
+    ========================= */
+
+
+    setText(
+        "temperature",
+        result.temperature_c !== null &&
+        result.temperature_c !== undefined
+            ? numberFormat(
+                result.temperature_c
+            ) + " C"
+            : "-"
+    );
+
+
+    setText(
+        "windSpeed",
+        result.wind_speed_knots !== null &&
+        result.wind_speed_knots !== undefined
+            ? numberFormat(
+                result.wind_speed_knots
+            ) + " knots"
+            : "-"
+    );
+
+
+    setText(
+        "waveHeight",
+        result.wave_height_m !== null &&
+        result.wave_height_m !== undefined
+            ? numberFormat(
+                result.wave_height_m
+            ) + " m"
+            : "-"
+    );
+
+
+    setText(
+        "rainfall",
+        result.rainfall_mm !== null &&
+        result.rainfall_mm !== undefined
+            ? numberFormat(
+                result.rainfall_mm
+            ) + " mm"
+            : "-"
+    );
+
+
+    /* =========================
+       VESSEL
+    ========================= */
+
+
+    setText(
+        "vessel",
+        safe(vessel.vessel_name)
+    );
+
+
+    setText(
+        "vesselCapacity",
+        vessel.capacity_mt !== null &&
+        vessel.capacity_mt !== undefined
+            ? numberFormat(
+                vessel.capacity_mt
+            ) + " MT"
+            : "-"
+    );
+
+
+    /* =========================
+       PROFIT
+    ========================= */
+
+
+    setText(
+        "currentProfit",
+        money(result.current_profit)
+    );
+
+
+    setText(
+        "forecastProfit",
+        money(result.forecast_profit)
+    );
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+
+    showStatus(
+        "✓ 7-day freight forecast loaded successfully from the completed AI shipment analysis."
+    );
+
+
+    /* =========================
+       TABLE
+    ========================= */
+
+
+    const table =
+        document.getElementById(
+            "forecastTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (forecast.length === 0) {
+
+        table.innerHTML =
+            '<tr>' +
+            '<td colspan="8">' +
+            'No forecast records available.' +
+            '</td>' +
+            '</tr>';
+
+    }
+
+
+    forecast.forEach(
+        function(item) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const differenceValue =
+                Number(
+                    item.rate_difference
+                );
+
+
+            let differenceClass =
+                "";
+
+            if (
+                !isNaN(
+                    differenceValue
+                )
+            ) {
+
+                if (
+                    differenceValue > 0
+                ) {
+
+                    differenceClass =
+                        "red";
+
+                } else if (
+                    differenceValue < 0
+                ) {
+
+                    differenceClass =
+                        "green";
+
+                }
+
+            }
+
+
+            row.innerHTML =
+
+                "<td>" +
+
+                safe(
+                    item.forecast_day
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                safe(
+                    item.date
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                money(
+                    item.current_freight_rate
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                money(
+                    item.predicted_freight_rate
+                ) +
+
+                "</td>" +
+
+
+                "<td class='" +
+                differenceClass +
+                "'>" +
+
+                money(
+                    item.rate_difference
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                safe(
+                    item.market_trend
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                safe(
+                    item.weather_risk
+                ) +
+
+                "</td>" +
+
+
+                "<td>" +
+
+                numberFormat(
+                    item.demand
+                ) +
+
+                "</td>";
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    /* =========================
+       GRAPH
+    ========================= */
+
+
+    drawForecastChart(
+        forecast
+    );
+
+}
+
+
+/* =========================
+   DRAW GRAPH
+========================= */
+
+
+function drawForecastChart(
+    forecast
+) {
+
+
+    const canvas =
+        document.getElementById(
+            "forecastCanvas"
+        );
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    const width =
+        canvas.clientWidth;
+
+    const height =
+        360;
+
+
+    canvas.width =
+        width;
+
+    canvas.height =
+        height;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    if (
+        !forecast ||
+        forecast.length === 0
+    ) {
 
         ctx.fillStyle =
-            "#091525";
+            "#94a3b8";
 
-        ctx.fillRect(
-            0,
-            0,
-            chartWidth,
-            chartHeight
+        ctx.font =
+            "16px Arial";
+
+        ctx.fillText(
+            "No forecast data available",
+            30,
+            50
+        );
+
+        return;
+
+    }
+
+
+    const values =
+        forecast.map(
+            function(item) {
+
+                return Number(
+                    item.predicted_freight_rate
+                );
+
+            }
         );
 
 
-        // Find range
+    const currentValues =
+        forecast.map(
+            function(item) {
 
-        const allValues =
-            currentRates.concat(
-                predictedRates
-            );
+                return Number(
+                    item.current_freight_rate
+                );
 
-
-        let minValue =
-            Math.min(...allValues);
-
-
-        let maxValue =
-            Math.max(...allValues);
+            }
+        );
 
 
-        if (minValue === maxValue) {
+    const allValues =
+        values.concat(
+            currentValues
+        );
 
-            minValue -= 1;
 
-            maxValue += 1;
+    const minValue =
+        Math.min(
+            ...allValues
+        );
+
+
+    const maxValue =
+        Math.max(
+            ...allValues
+        );
+
+
+    const padding =
+        55;
+
+
+    const chartWidth =
+        width -
+        padding * 2;
+
+
+    const chartHeight =
+        height -
+        padding * 2;
+
+
+    function getX(index) {
+
+        if (
+            forecast.length === 1
+        ) {
+
+            return width / 2;
 
         }
 
+        return (
+            padding +
+            (
+                index /
+                (
+                    forecast.length - 1
+                )
+            ) *
+            chartWidth
+        );
 
-        const padding =
-            45;
-
-
-        const chartLeft =
-            padding;
-
-
-        const chartRight =
-            chartWidth - 20;
-
-
-        const chartTop =
-            30;
+    }
 
 
-        const chartBottom =
-            chartHeight - 45;
+    function getY(value) {
+
+        if (
+            maxValue === minValue
+        ) {
+
+            return height / 2;
+
+        }
+
+        return (
+
+            height -
+            padding -
+
+            (
+                (
+                    value -
+                    minValue
+                ) /
+                (
+                    maxValue -
+                    minValue
+                )
+            ) *
+            chartHeight
+
+        );
+
+    }
 
 
-        const plotWidth =
-            chartRight - chartLeft;
+    /* GRID */
+
+    ctx.strokeStyle =
+        "#1e293b";
+
+    ctx.lineWidth =
+        1;
 
 
-        const plotHeight =
-            chartBottom - chartTop;
+    for (
+        let i = 0;
+        i <= 4;
+        i++
+    ) {
+
+        const y =
+            padding +
+            (
+                i / 4
+            ) *
+            chartHeight;
 
 
-        // Grid lines
+        ctx.beginPath();
 
-        ctx.strokeStyle =
-            "#1d334d";
+        ctx.moveTo(
+            padding,
+            y
+        );
 
-        ctx.lineWidth = 1;
+        ctx.lineTo(
+            width - padding,
+            y
+        );
+
+        ctx.stroke();
+
+    }
 
 
-        for (let i = 0; i <= 5; i++) {
+    /* CURRENT RATE */
+
+    ctx.strokeStyle =
+        "#38bdf8";
+
+    ctx.lineWidth =
+        3;
+
+
+    ctx.beginPath();
+
+
+    currentValues.forEach(
+        function(value, index) {
+
+            const x =
+                getX(index);
 
             const y =
-                chartTop +
-                (plotHeight / 5) * i;
+                getY(value);
 
 
-            ctx.beginPath();
+            if (
+                index === 0
+            ) {
 
-            ctx.moveTo(
-                chartLeft,
-                y
-            );
+                ctx.moveTo(
+                    x,
+                    y
+                );
 
-            ctx.lineTo(
-                chartRight,
-                y
-            );
+            } else {
 
-            ctx.stroke();
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+    );
 
 
-            const value =
-                maxValue -
-                ((maxValue - minValue) / 5) * i;
+    ctx.stroke();
+
+
+    /* PREDICTED RATE */
+
+    ctx.strokeStyle =
+        "#22c55e";
+
+    ctx.lineWidth =
+        3;
+
+
+    ctx.beginPath();
+
+
+    values.forEach(
+        function(value, index) {
+
+            const x =
+                getX(index);
+
+            const y =
+                getY(value);
+
+
+            if (
+                index === 0
+            ) {
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            } else {
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+    );
+
+
+    ctx.stroke();
+
+
+    /* POINTS */
+
+    values.forEach(
+        function(value, index) {
+
+            const x =
+                getX(index);
+
+            const y =
+                getY(value);
 
 
             ctx.fillStyle =
-                "#8da1b7";
+                "#22c55e";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+
+            ctx.fillStyle =
+                "#cbd5e1";
 
             ctx.font =
                 "12px Arial";
 
             ctx.fillText(
-                value.toFixed(1),
-                5,
-                y + 4
+                "Day " +
+                forecast[index].forecast_day,
+                x - 15,
+                height - 20
             );
 
         }
+    );
 
 
-        // X labels
+    /* LEGEND */
 
-        labels.forEach(
-            (label, index) => {
+    ctx.fillStyle =
+        "#38bdf8";
 
-                const x =
-                    chartLeft +
-                    (plotWidth /
-                        Math.max(
-                            labels.length - 1,
-                            1
-                        )
-                    ) *
-                    index;
+    ctx.font =
+        "14px Arial";
 
+    ctx.fillText(
+        "Current Freight Rate",
+        padding,
+        25
+    );
 
-                ctx.fillStyle =
-                    "#8da1b7";
 
-                ctx.font =
-                    "12px Arial";
+    ctx.fillStyle =
+        "#22c55e";
 
+    ctx.fillText(
+        "Predicted Freight Rate",
+        padding + 170,
+        25
+    );
 
-                ctx.textAlign =
-                    "center";
+}
 
 
-                ctx.fillText(
-                    label,
-                    x,
-                    chartBottom + 25
-                );
+/* =========================
+   NAVIGATION
+========================= */
 
-            }
-        );
 
+function goBack() {
 
-        function getX(index) {
+    window.location.href =
+        "result.html";
 
-            return chartLeft +
-                (
-                    plotWidth /
-                    Math.max(
-                        labels.length - 1,
-                        1
-                    )
-                ) *
-                index;
+}
 
-        }
 
+function goReport() {
 
-        function getY(value) {
+    window.location.href =
+        "report.html";
 
-            return chartBottom -
-                (
-                    (value - minValue) /
-                    (maxValue - minValue)
-                ) *
-                plotHeight;
+}
 
-        }
 
+function goBooking() {
 
-        function drawLine(values) {
+    window.location.href =
+        "booking.html";
 
-            ctx.beginPath();
+}
 
 
-            values.forEach(
-                (value, index) => {
+/* =========================
+   START
+========================= */
 
-                    const x =
-                        getX(index);
 
-                    const y =
-                        getY(value);
+window.addEventListener(
+    "DOMContentLoaded",
+    loadForecast
+);
 
-
-                    if (index === 0) {
-
-                        ctx.moveTo(
-                            x,
-                            y
-                        );
-
-                    } else {
-
-                        ctx.lineTo(
-                            x,
-                            y
-                        );
-
-                    }
-
-                }
-            );
-
-
-            ctx.strokeStyle =
-                "#5bb6ff";
-
-            ctx.lineWidth = 3;
-
-            ctx.stroke();
-
-
-            // Points
-
-            values.forEach(
-                (value, index) => {
-
-                    const x =
-                        getX(index);
-
-                    const y =
-                        getY(value);
-
-
-                    ctx.beginPath();
-
-                    ctx.arc(
-                        x,
-                        y,
-                        5,
-                        0,
-                        Math.PI * 2
-                    );
-
-
-                    ctx.fillStyle =
-                        "#5bb6ff";
-
-                    ctx.fill();
-
-                }
-            );
-
-        }
-
-
-        drawLine(currentRates);
-
-
-        // Predicted line
-
-        ctx.beginPath();
-
-
-        predictedRates.forEach(
-            (value, index) => {
-
-                const x =
-                    getX(index);
-
-                const y =
-                    getY(value);
-
-
-                if (index === 0) {
-
-                    ctx.moveTo(
-                        x,
-                        y
-                    );
-
-                } else {
-
-                    ctx.lineTo(
-                        x,
-                        y
-                    );
-
-                }
-
-            }
-        );
-
-
-        ctx.strokeStyle =
-            "#f0b35a";
-
-        ctx.lineWidth = 3;
-
-        ctx.setLineDash([
-            8,
-            5
-        ]);
-
-        ctx.stroke();
-
-        ctx.setLineDash([]);
-
-
-        // Predicted points
-
-        predictedRates.forEach(
-            (value, index) => {
-
-                const x =
-                    getX(index);
-
-                const y =
-                    getY(value);
-
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    x,
-                    y,
-                    5,
-                    0,
-                    Math.PI * 2
-                );
-
-
-                ctx.fillStyle =
-                    "#f0b35a";
-
-                ctx.fill();
-
-            }
-        );
-
-
-        // Legend
-
-        ctx.textAlign =
-            "left";
-
-
-        ctx.fillStyle =
-            "#5bb6ff";
-
-        ctx.fillRect(
-            chartLeft,
-            8,
-            25,
-            4
-        );
-
-
-        ctx.fillStyle =
-            "#d2dce7";
-
-        ctx.font =
-            "12px Arial";
-
-        ctx.fillText(
-            "Current Freight",
-            chartLeft + 35,
-            13
-        );
-
-
-        ctx.fillStyle =
-            "#f0b35a";
-
-        ctx.fillRect(
-            chartLeft + 150,
-            8,
-            25,
-            4
-        );
-
-
-        ctx.fillStyle =
-            "#d2dce7";
-
-        ctx.fillText(
-            "ML Predicted Freight",
-            chartLeft + 185,
-            13
-        );
-
-    }
-
-
-    // -----------------------------
-    // START
-    // -----------------------------
-
-    loadForecast();
 
 </script>
 
 </body>
+
 </html>

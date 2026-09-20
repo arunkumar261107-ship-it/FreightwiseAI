@@ -346,7 +346,6 @@
         </p>
     </section>
 
-
     <!-- PROCESS -->
     <div class="progress">
         <div class="progress-item active">01 · Cargo</div>
@@ -355,7 +354,6 @@
         <div class="progress-item active">04 · AI Decision</div>
     </div>
 
-
     <!-- FIRST PAGE INTELLIGENCE -->
     <div class="section-title">
         <h2>Freight Intelligence Dashboard</h2>
@@ -363,7 +361,6 @@
             Core intelligence modules available before running the final analysis.
         </p>
     </div>
-
 
     <section class="grid">
 
@@ -407,7 +404,6 @@
             </div>
         </div>
 
-
         <!-- ROUTE -->
         <div class="card">
             <div class="icon">🗺️</div>
@@ -448,7 +444,6 @@
             </div>
         </div>
 
-
         <!-- FREIGHT -->
         <div class="card">
             <div class="icon">📈</div>
@@ -483,7 +478,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- WEATHER -->
         <div class="card">
@@ -525,7 +519,6 @@
             </div>
         </div>
 
-
         <!-- PROFIT -->
         <div class="card">
             <div class="icon">💰</div>
@@ -566,7 +559,6 @@
             </div>
         </div>
 
-
         <!-- AI DECISION -->
         <div class="card decision-card">
             <div class="icon">🤖</div>
@@ -591,7 +583,6 @@
 
     </section>
 
-
     <!-- INPUT -->
     <div class="section-title">
         <h2>Cargo & Trade Analysis</h2>
@@ -599,7 +590,6 @@
             Enter your shipment details to activate the complete AI analysis.
         </p>
     </div>
-
 
     <section class="form-card">
 
@@ -619,7 +609,6 @@
                 </select>
             </div>
 
-
             <div class="field">
                 <label for="cargoQuantity">
                     Cargo Quantity (MT)
@@ -632,7 +621,6 @@
                     min="1"
                 >
             </div>
-
 
             <div class="field">
                 <label for="coalPrice">
@@ -648,7 +636,6 @@
                 >
             </div>
 
-
             <div class="field">
                 <label for="sellingPrice">
                     Expected Selling Price / MT
@@ -663,14 +650,12 @@
                 >
             </div>
 
-
             <div class="field">
                 <label for="originPort">
                     Origin Port
                 </label>
 
                 <select id="originPort">
-
                     <option value="Indonesia">
                         Indonesia
                     </option>
@@ -682,10 +667,8 @@
                     <option value="RichardsBay">
                         RichardsBay
                     </option>
-
                 </select>
             </div>
-
 
             <div class="field">
                 <label for="destinationPort">
@@ -693,7 +676,6 @@
                 </label>
 
                 <select id="destinationPort">
-
                     <option value="Chennai">
                         Chennai
                     </option>
@@ -701,12 +683,10 @@
                     <option value="Mundra">
                         Mundra
                     </option>
-
                 </select>
             </div>
 
         </div>
-
 
         <div class="analyze-area">
 
@@ -731,11 +711,9 @@
 
 </main>
 
-
 <footer>
     FreightWise AI · Intelligent Freight Forecasting & Decision Support System
 </footer>
-
 
 <script>
 
@@ -760,7 +738,6 @@ function money(value) {
     );
 }
 
-
 function number(value) {
 
     if (
@@ -779,7 +756,6 @@ function number(value) {
     );
 }
 
-
 function percentage(value) {
 
     if (
@@ -792,7 +768,6 @@ function percentage(value) {
 
     return Number(value).toFixed(2) + "%";
 }
-
 
 function safeText(value) {
 
@@ -807,14 +782,12 @@ function safeText(value) {
     return value;
 }
 
-
 function updateDashboard(data) {
 
     console.log(
         "FreightWise AI result:",
         data
     );
-
 
     /* =========================
        VESSEL INTELLIGENCE
@@ -865,7 +838,6 @@ function updateDashboard(data) {
             data.capacity_utilization
         );
 
-
     /* =========================
        ROUTE INTELLIGENCE
        ========================= */
@@ -915,7 +887,6 @@ function updateDashboard(data) {
             route.port_status
         );
 
-
     /* =========================
        FREIGHT INTELLIGENCE
        ========================= */
@@ -947,7 +918,6 @@ function updateDashboard(data) {
         safeText(
             data.market_trend
         );
-
 
     /* =========================
        WEATHER
@@ -988,7 +958,6 @@ function updateDashboard(data) {
             data.rainfall_mm
         ) + " mm";
 
-
     /* =========================
        PROFIT
        ========================= */
@@ -1028,7 +997,6 @@ function updateDashboard(data) {
             data.break_even_selling_price
         );
 
-
     /* =========================
        AI DECISION
        ========================= */
@@ -1048,14 +1016,12 @@ function updateDashboard(data) {
             data.confidence
         );
 
-
     const reasons =
         document.getElementById(
             "decisionReasons"
         );
 
     reasons.innerHTML = "";
-
 
     if (
         Array.isArray(
@@ -1098,7 +1064,6 @@ function updateDashboard(data) {
     }
 }
 
-
 async function analyzeShipment() {
 
     const cargoType =
@@ -1131,7 +1096,6 @@ async function analyzeShipment() {
             "destinationPort"
         ).value;
 
-
     if (
         !cargoQuantity ||
         !coalPrice ||
@@ -1145,7 +1109,6 @@ async function analyzeShipment() {
         return;
     }
 
-
     const loading =
         document.getElementById(
             "loading"
@@ -1153,7 +1116,6 @@ async function analyzeShipment() {
 
     loading.style.display =
         "block";
-
 
     const params =
         new URLSearchParams({
@@ -1181,7 +1143,6 @@ async function analyzeShipment() {
 
         });
 
-
     try {
 
         const response =
@@ -1191,7 +1152,6 @@ async function analyzeShipment() {
                 params.toString()
             );
 
-
         if (!response.ok) {
 
             throw new Error(
@@ -1200,16 +1160,13 @@ async function analyzeShipment() {
             );
         }
 
-
         const data =
             await response.json();
-
 
         console.log(
             "API response:",
             data
         );
-
 
         if (data.error) {
 
@@ -1220,7 +1177,6 @@ async function analyzeShipment() {
             return;
         }
 
-
         /*
         SAVE RESULT
         */
@@ -1229,7 +1185,6 @@ async function analyzeShipment() {
             "freightwiseResult",
             JSON.stringify(data)
         );
-
 
         sessionStorage.setItem(
             "freightwiseInput",
@@ -1265,7 +1220,6 @@ async function analyzeShipment() {
             })
         );
 
-
         /*
         UPDATE FIRST PAGE
         */
@@ -1274,19 +1228,12 @@ async function analyzeShipment() {
             data
         );
 
-
         /*
-        KEEP USER ON FIRST PAGE
+        OPEN COMPLETE RESULT PAGE
         */
 
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
+        window.location.href =
+            "result.html";
 
     } catch (error) {
 
@@ -1306,7 +1253,6 @@ async function analyzeShipment() {
             "none";
     }
 }
-
 
 /*
 AUTO LOAD PREVIOUS RESULT
